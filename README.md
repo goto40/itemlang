@@ -1,7 +1,6 @@
 # Custom interface definition language
 
-This is an example of custom interface definition language.
-An example model is given in the file "example.myidl" and "types.myidl".
+This is an example of custom interface definition language. It mainly tagrets C++.
 
 ## Rough outline
 
@@ -39,5 +38,5 @@ Get help:
 
 Run code generation for C++:
 
-        $ itemc example.myidl --generate-cpp --src-gen-folder=~/Documents/target_folder_for_code
+        $ itemc example.myidl --generate-cpp
 
