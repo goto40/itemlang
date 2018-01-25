@@ -51,7 +51,7 @@ setup(
     url=URL,
     download_url=DOWNLOAD_URL,
     packages=mypackages,
-    package_data={'': ['*.tx','support_*_code/**/*']},
+    package_data={'': ['*.tx','*.template','support_*_code/**/*']},
     install_requires=["textX","jinja2"],
     keywords="idl",
     entry_points={
