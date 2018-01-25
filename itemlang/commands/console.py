@@ -1,4 +1,7 @@
-if __name__ == "__main__":
+from os.path import expanduser
+from itemlang.itemc.codegen import codegen
+
+def itemc():
     import argparse
     parser = argparse.ArgumentParser(description='generate code for the custom idl model.')
     parser.add_argument('model_file', metavar='model_file', type=str,
