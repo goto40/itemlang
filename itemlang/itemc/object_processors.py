@@ -24,7 +24,7 @@ def check_array_attribute(array_attribute):
     :return: None
     throws on error
     """
-    from itemlang.itemc.custom_idl_metamodel_formula import ScalarRef
+    from itemlang.itemc.metamodel_formula import ScalarRef
     dependencies = map(lambda x: x.ref0,
                         reduce( lambda l1,l2: l1+l2,
                             map( lambda node: children_of_type(ScalarRef, node), array_attribute.array_dimensions ), []

@@ -9,7 +9,7 @@ import numpy as np
 
 def test_basic_python_code():
 
-    import itemlang.itemc.custom_idl_codegen as codegen
+    import itemlang.itemc.codegen as codegen
 
     #################################
     # Model definition and Code creation

@@ -4,7 +4,7 @@ template engine (http://jinja.pocoo.org/docs/dev/)
 """
 
 from __future__ import unicode_literals
-import itemlang.itemc.custom_idl_metamodel as custom_idl_metamodel
+import itemlang.itemc.metamodel as custom_idl_metamodel
 from os import mkdir,makedirs
 from shutil import copyfile
 from os.path import dirname, join, exists, expanduser, abspath

@@ -22,7 +22,7 @@ def the_package(struct):
 
 
 def typename(thetype):
-    from itemlang.itemc.custom_idl_metamodel import RawType
+    from itemlang.itemc.metamodel import RawType
     if type(thetype) is RawType:
         if thetype.pythontype.fromlib:
             res = thetype.pythontype.fromlib+"."+thetype.pythontype.type
@@ -38,7 +38,7 @@ def typename(thetype):
         return res
 
 def get_meta_info(attribute):
-    from itemlang.itemc.custom_idl_metamodel import RawType
+    from itemlang.itemc.metamodel import RawType
     thetype = attribute.type
     if type(thetype) is RawType:
         return {"model_type_name":thetype.name, "format":thetype.pythontype.format}
@@ -46,7 +46,7 @@ def get_meta_info(attribute):
         return {"model_type_name":thetype.name}
 
 def default_value_init_code(attribute,fixed_read_only=False):
-    from itemlang.itemc.custom_idl_metamodel import Struct
+    from itemlang.itemc.metamodel import Struct
     if attribute.default_value and not(type(attribute.type) is Struct):
         return "{}".format(attribute.default_value)
     else:

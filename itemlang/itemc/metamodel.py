@@ -5,7 +5,7 @@ import os
 import textx.scoping as scoping
 import textx.scoping_tools as scoping_tools
 from functools import reduce
-import itemlang.itemc.custom_idl_object_processors as object_processors
+import itemlang.itemc.object_processors as object_processors
 
 class CustomIdlBase(object):
     def __init__(self):
@@ -99,7 +99,7 @@ class ArrayDimension(CustomIdlBase):
 
 
 def get_meta_model(debug=False,**options):
-    from itemlang.itemc.custom_idl_metamodel_formula import Sum, Mul, Dif, Div, Val, ScalarRef
+    from itemlang.itemc.metamodel_formula import Sum, Mul, Dif, Div, Val, ScalarRef
 
     this_folder = dirname(abspath(__file__))
     mm = metamodel_from_file( os.path.join(this_folder,'CustomIDL.tx'), debug=debug,
