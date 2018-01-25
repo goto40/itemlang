@@ -6,7 +6,7 @@ python:
     - "3.5"
     - "3.6"
 before_install:
-    # Installing Arpeggio as a dependency
+    # Installing xtext etc. as a dependency
     - cd ..
     - pip install jinja2
     - pip install arpeggio
