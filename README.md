@@ -28,6 +28,10 @@ This is an example of custom interface definition language. It mainly tagrets C+
 1. Meta information about attributes and structures are provided as compile time information (template arguments and/or constexpr expressions and functions)
 
 
+## Installation
+
+See file ".travis.yml"
+
 
 ## Use the code generator
 
