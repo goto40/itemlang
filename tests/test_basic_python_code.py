@@ -128,3 +128,5 @@ struct Simple {
     assert not exists(os.path.join(this_folder,"mypackage1/test/Header.py"))
     assert not exists(os.path.join(this_folder,"mypackage1/test/Data.py"))
     assert not exists(os.path.join(this_folder,"mypackage1/test/Simple.py"))
+    assert not exists(os.path.join(this_folder,"mypackage1"))
+    assert not exists(os.path.join(this_folder,"attributes"))
