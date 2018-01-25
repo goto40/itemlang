@@ -1,5 +1,4 @@
-from custom_idl_metamodel import Struct, RawType
-from textx import model_root
+from itemlang.itemc.custom_idl_metamodel import Struct, RawType
 
 def path_to_file_name(struct):
     filename = ""
