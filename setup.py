@@ -3,7 +3,7 @@
 import os
 import sys
 import codecs
-from setuptools import setup
+from setuptools import setup, find_packages
 
 NAME = 'itemlang'
 DESC = 'item language: compiler and validator'
@@ -35,6 +35,9 @@ if sys.argv[-1].startswith('publish'):
         print("  git push --tags")
     sys.exit()
 
+mypackages = find_packages(exclude=["tests.*", "tests"])
+print("packages = {}".format(mypackages))
+
 setup(
     name=NAME,
     version=VERSION,
@@ -47,7 +50,8 @@ setup(
     license=LICENSE,
     url=URL,
     download_url=DOWNLOAD_URL,
-    packages=["itemlang", "itemlang.commands"],
+    packages=mypackages,
+    package_data={'': ['*.tx','support_*_code/**/*']},
     install_requires=["textX","jinja2"],
     keywords="idl",
     entry_points={
