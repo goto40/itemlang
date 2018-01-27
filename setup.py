@@ -14,7 +14,7 @@ LICENSE = 'MIT'
 URL = 'https://github.com/goto40/itemlang'
 DOWNLOAD_URL = 'https://github.com/goto40/itemlang/archive/v%s.tar.gz' \
     % VERSION
-README = codecs.open(os.path.join(os.path.dirname(__file__), 'README.md'),
+README = codecs.open(os.path.join(os.path.dirname(__file__), 'README.rst'),
                      'r', encoding='utf-8').read()
 
 
