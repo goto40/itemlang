@@ -44,14 +44,24 @@ class CheckRawTypes(object):
         else:
             self.options = {}
 
-    def __call__(self, rawtype):
-        if "generate_cpp" in self.options.keys() and self.options["generate_cpp"]:
-            if not rawtype.cpptype:
-                raise Exception("C++ type is required to generate C++ code for {} in {}".format(rawtype.name, model_root(rawtype)._tx_filename))
-        if "generate_python" in self.options.keys() and self.options["generate_python"]:
-            if not rawtype.pythontype:
-                raise Exception("python type is required to generate python code for {} in {}".format(rawtype.name, model_root(rawtype)._tx_filename))
-        if "generate_python_construct" in self.options.keys() and self.options["generate_python_construct"]:
-            if not rawtype.pythonconstructtype:
-                raise Exception("python-construct type is required to generate python code for {} in {}".format(rawtype.name, model_root(rawtype)._tx_filename))
-
+    def __call__(self, struct):
+        from itemlang.itemc.metamodel import RawType
+        def check_raw_type(rawtype):
+            if "generate_cpp" in self.options.keys() and self.options["generate_cpp"]:
+                if not rawtype.cpptype:
+                    raise Exception("C++ type is required to generate C++ code for {} in {}".format(rawtype.name,
+                                                                                                    model_root(
+                                                                                                        rawtype)._tx_filename))
+            if "generate_python" in self.options.keys() and self.options["generate_python"]:
+                if not rawtype.pythontype:
+                    raise Exception("python type is required to generate python code for {} in {}".format(rawtype.name,
+                                                                                                          model_root(
+                                                                                                              rawtype)._tx_filename))
+            if "generate_python_construct" in self.options.keys() and self.options["generate_python_construct"]:
+                if not rawtype.pythonconstructtype:
+                    raise Exception(
+                        "python-construct type is required to generate python code for {} in {}".format(rawtype.name,
+                                                                                                        model_root(
+                                                                                                            rawtype)._tx_filename))
+        for t in set(filter(lambda x: isinstance(x, RawType), map(lambda x:x.type, struct.attributes))):
+            check_raw_type(t)
