@@ -70,7 +70,7 @@ struct Simple {
                         target_namespace "mypackage1.test"
                         struct Header {
                             scalar proofword : types.int
-                            scalar N : types.int { default = "0x16" }
+                            scalar n : types.int { default = "0x16" }
                             scalar k : types.int
                             array info : types.float[10]
                         }
@@ -79,6 +79,36 @@ struct Simple {
                             scalar x        : types.UINT16
                             array  a_ui16   : types.UINT16[n]
                             scalar n        : types.UINT16 {default="5"} // error
+                        }
+                        }
+                        """)
+
+    # ---------------------------
+    # array size after array (2)
+    # ---------------------------
+    with raises(Exception, match=r'depends on .* not defined before it'):
+        codegen.codegen(srcgen_folder=dest_folder,
+                        model_string=
+                        """
+                        // model
+                        package types {
+                            type int {}
+                            type UINT16 {}
+                            type float {}
+                        }
+                        package mypackage1 {
+                        target_namespace "mypackage1.test"
+                        struct Header {
+                            scalar proofword : types.int
+                            scalar n : types.int { default = "0x16" }
+                            scalar k : types.int
+                            array info : types.float[10]
+                        }
+                        struct Simple {
+                            scalar n        : types.UINT16 {default="5"} 
+                            scalar x        : types.UINT16
+                            array  a_ui16   : types.UINT16[n:x][h.n:y]
+                            scalar h        : Header
                         }
                         }
                         """)
