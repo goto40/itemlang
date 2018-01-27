@@ -1,13 +1,9 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-from builtins import Exception
 from os.path import dirname, exists
 from shutil import rmtree
 import os.path
-from pytest import raises
-import importlib
-import numpy as np
 from pytest import raises
 
 def test_validation_check_array_dimensions():
