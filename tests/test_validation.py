@@ -78,7 +78,7 @@ struct Simple {
                             scalar h        : Header
                             scalar x        : types.UINT16
                             array  a_ui16   : types.UINT16[n]
-                            scalar n        : types.UINT16 {default="5"}
+                            scalar n        : types.UINT16 {default="5"} // error
                         }
                         }
                         """)
