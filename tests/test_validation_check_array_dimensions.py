@@ -10,7 +10,10 @@ import importlib
 import numpy as np
 from pytest import raises
 
-def test_validation():
+def test_validation_check_array_dimensions():
+    """
+    checks that arrays with more than 1 dimension name the indicies.
+    """
 
     import itemlang.itemc.codegen as codegen
 
@@ -38,25 +41,17 @@ package types {
 }
 package mypackage1 {
 target_namespace "mypackage1.test"
-struct Header {
-    scalar proofword : types.int
-    scalar N : types.int { default = "0x16" }
-    scalar k : types.int
-    array info : types.float[10]
-}
-struct Simple {
-    scalar h        : Header
-    scalar n        : types.UINT16 {default="5"}
-    scalar x        : types.UINT16
-    array  a_ui16   : types.UINT16[n]
-}
+    struct Simple {
+        scalar n        : types.UINT16 {default="5"}
+        array  a_ui16   : types.UINT16[n:x][2*n:y]
+    }
 }
 """)
 
     # ---------------------------
-    # array size after array (1)
+    # error 1
     # ---------------------------
-    with raises(Exception, match=r'depends on .* not defined before it'):
+    with raises(Exception, match=r'array .* needs to have named dimensions: specify .*'):
         codegen.codegen(srcgen_folder=dest_folder,
                         model_string=
                         """
@@ -68,25 +63,17 @@ struct Simple {
                         }
                         package mypackage1 {
                         target_namespace "mypackage1.test"
-                        struct Header {
-                            scalar proofword : types.int
-                            scalar n : types.int { default = "0x16" }
-                            scalar k : types.int
-                            array info : types.float[10]
-                        }
-                        struct Simple {
-                            scalar h        : Header
-                            scalar x        : types.UINT16
-                            array  a_ui16   : types.UINT16[n]
-                            scalar n        : types.UINT16 {default="5"} // error
-                        }
+                            struct Simple {
+                                scalar n        : types.UINT16 {default="5"}
+                                array  a_ui16   : types.UINT16[n][2*n:y] // missing dimension name
+                            }
                         }
                         """)
 
     # ---------------------------
-    # array size after array (2)
+    # error 1
     # ---------------------------
-    with raises(Exception, match=r'depends on .* not defined before it'):
+    with raises(Exception, match=r'array .* needs to have named dimensions: specify .*'):
         codegen.codegen(srcgen_folder=dest_folder,
                         model_string=
                         """
@@ -98,18 +85,10 @@ struct Simple {
                         }
                         package mypackage1 {
                         target_namespace "mypackage1.test"
-                        struct Header {
-                            scalar proofword : types.int
-                            scalar n : types.int { default = "0x16" }
-                            scalar k : types.int
-                            array info : types.float[10]
-                        }
-                        struct Simple {
-                            scalar n        : types.UINT16 {default="5"} 
-                            scalar x        : types.UINT16
-                            array  a_ui16   : types.UINT16[n:x][h.n:y]
-                            scalar h        : Header
-                        }
+                            struct Simple {
+                                scalar n        : types.UINT16 {default="5"}
+                                array  a_ui16   : types.UINT16[n][2*n] // missing dimension name
+                            }
                         }
                         """)
 
