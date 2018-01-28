@@ -1,0 +1,5 @@
+[submodule "catch"]
+	path = catch
+	url = https://github.com/catchorg/Catch2.git
+    branch = master    
+    tag = v2.1.1
