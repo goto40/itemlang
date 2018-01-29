@@ -3,8 +3,7 @@
 Dependencies:
  * GSL: https://github.com/Microsoft/GSL
  * catch2: https://github.com/catchorg/Catch2
-Get the project:
-
+Get the project::
 
     $ git clone https://github.com/goto40/itemlang --recurse-submodules 
 
