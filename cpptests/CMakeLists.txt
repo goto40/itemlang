@@ -13,7 +13,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
 # add catch include (https://github.com/catchorg/Catch2)
-include_directories(../catch/single_include)
+include_directories(catch/single_include)
+include_directories(GSL/include)
 
 # add include_directories
 include_directories(${SRCGEN})

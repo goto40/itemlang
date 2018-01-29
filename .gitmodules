@@ -1,5 +1,10 @@
 [submodule "catch"]
-	path = catch
+	path = cpptests/catch
 	url = https://github.com/catchorg/Catch2.git
     branch = master    
     tag = v2.1.1
+[submodule "cpptests/GSL"]
+	path = cpptests/GSL
+	url = https://github.com/Microsoft/GSL
+    branch = master
+
