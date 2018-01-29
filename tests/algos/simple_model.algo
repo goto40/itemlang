@@ -1,0 +1,8 @@
+import "simple_data.inc"
+algo_package test {
+    algo Adder {
+        in      a: data.Data // input
+        inout   b: data.Data // b = a+b
+        out     c: data.Data // == b
+    }
+}
