@@ -3,7 +3,7 @@ from textx import children_of_type
 from pytest import raises
 from os.path import join, dirname, abspath
 
-def test_basic_algo_model():
+def test_validation_algo_model():
     this_folder = dirname(abspath(__file__))
     mm=algo_metamodel.get_meta_model();
 

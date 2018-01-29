@@ -1,0 +1,14 @@
+{% for s in algo.algo.get_all_structs_of_arguments() %}
+#include "{{cpptool.full_path_to_file_name(s)}}"
+{% endfor %}
+
+{% if algo.parent.target_namespace != None %}
+{{cpptool.open_namespace(struct.parent)}}
+{% endif %}
+
+// algo {{algo.name}} / {{algo.algo.name}}
+
+{% if struct.parent.target_namespace != None %}
+{{cpptool.close_namespace(algo.parent)}}
+{% endif %}
+

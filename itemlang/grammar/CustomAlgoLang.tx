@@ -15,6 +15,10 @@ AlgoPackage:
     packages+=AlgoPackage
     |
     algos+=Algo
+    |
+    cpp_algos+=CppAlgo
+    |
+    python_algos+=PythonAlgo
     )*
     "}"
 ;
@@ -29,3 +33,6 @@ AlgoArguments: AlgoIn|AlgoOut|AlgoInOut;
 AlgoIn:     "in"    name=ID ":" type=[Struct|FQN];
 AlgoOut:    "out"   name=ID ":" type=[Struct|FQN];
 AlgoInOut:  "inout" name=ID ":" type=[Struct|FQN];
+
+CppAlgo:    "C++"    name=ID ":" algo=[Algo|FQN];
+PythonAlgo: "python" name=ID ":" algo=[Algo|FQN];
