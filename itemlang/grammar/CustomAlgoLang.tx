@@ -1,0 +1,31 @@
+import CustomIDL
+
+Model:
+    imports+=Import*
+    (
+    algo_packages+=AlgoPackage
+    |
+    packages+=Package // only to be included! Else no code can be generated for them
+    )*
+;
+AlgoPackage:
+    "algo_package" name=ID "{"
+    (target_namespace=TargetNamespace)?
+    (
+    packages+=AlgoPackage
+    |
+    algos+=Algo
+    )*
+    "}"
+;
+
+Algo:
+    "algo" name=ID "{"
+        arguments+=AlgoArguments+
+    "}"
+;
+
+AlgoArguments: AlgoIn|AlgoOut|AlgoInOut;
+AlgoIn:     "in"    name=ID ":" type=[Struct|FQN];
+AlgoOut:    "out"   name=ID ":" type=[Struct|FQN];
+AlgoInOut:  "inout" name=ID ":" type=[Struct|FQN];

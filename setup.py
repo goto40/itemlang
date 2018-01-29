@@ -57,6 +57,7 @@ setup(
     entry_points={
         'console_scripts': [
             'itemc = itemlang.commands.console:itemc'
+            'algoc = itemlang.commands.console:algoc'
         ]
     },
     classifiers=[

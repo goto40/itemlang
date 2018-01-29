@@ -1,9 +1,18 @@
+//
+// Item language to define data structures
+// ---------------------------------------
+// Item definitions (Struct) are stored in Packages.
+// Items have attributes which reference RawTypes (e.g. int, float, etc.) or other Structs as type.
+// RawTypes are mapped to concrete language specific types.
+// Arrays may have fixed size or variable size (defined by other attributes).
+// Arrays may have multiple dimensions.
+
 Model:
     imports+=Import*
     packages+=Package+
 ;
 Package:
-    "package" name=ID "{"
+    ("package"|"item_package") name=ID "{"
     (target_namespace=TargetNamespace)?
     (
     packages+=Package
