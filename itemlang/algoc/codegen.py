@@ -1,16 +1,16 @@
 from __future__ import unicode_literals
-import itemlang.itemc.metamodel as custom_idl_metamodel
+import itemlang.algoc.metamodel as custom_algo_metamodel
 from os import mkdir,makedirs
 from shutil import copyfile
 from os.path import dirname, join, exists, expanduser, abspath
 import jinja2
 from textx import children_of_type
-import itemlang.algoc.support_cpp_code.custom_idl_cpptool as cpptool
+import itemlang.algoc.support_cpp_code.custom_algo_cpptool as cpptool
 
 def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False, generate_cpp=False, generate_python=False, generate_python_construct=False):
 
     this_folder = dirname(abspath(__file__))
-    mm = custom_idl_metamodel.get_meta_model(
+    mm = custom_algo_metamodel.get_meta_model(
         generate_cpp=generate_cpp,
         generate_python=generate_python,
         generate_python_construct=generate_python_construct

@@ -1,0 +1,13 @@
+import "../items/example.item"
+
+algo_package example {
+    target_namespace "project.example"
+
+    algo SimpleAdder {
+        in a: example.Simple
+        in b: example.Simple
+        out c: example.Simple
+    }
+
+    C++ simple_adder1: SimpleAdder
+}
