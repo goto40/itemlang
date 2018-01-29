@@ -3,12 +3,12 @@
 {% endfor %}
 
 {% if algo.parent.target_namespace != None %}
-{{cpptool.open_namespace(struct.parent)}}
+{{cpptool.open_namespace(algo.parent)}}
 {% endif %}
 
 // algo {{algo.name}} / {{algo.algo.name}}
 
-{% if struct.parent.target_namespace != None %}
+{% if algo.parent.target_namespace != None %}
 {{cpptool.close_namespace(algo.parent)}}
 {% endif %}
 

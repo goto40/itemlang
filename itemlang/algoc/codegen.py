@@ -57,11 +57,11 @@ def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
     template = jinja_env.get_template('cpp_header.template')
     for algo in children_of_type("CppAlgo", idl_model):
         # For each entity generate java file
-        struct_folder = join(srcgen_folder, cpptool.path_to_file_name(struct))
-        if not exists(struct_folder):
-            makedirs(struct_folder)
-        with open(join(struct_folder,
-                       "{}.h".format(struct.name)), 'w') as f:
+        algo_folder = join(srcgen_folder, cpptool.path_to_file_name(algo))
+        if not exists(algo_folder):
+            makedirs(algo_folder)
+        with open(join(algo_folder,
+                       "{}.h".format(algo.name)), 'w') as f:
             f.write(template.render(algo=algo,
                                     cpptool=cpptool
                                     ))
