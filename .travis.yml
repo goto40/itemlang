@@ -13,7 +13,11 @@ before_install:
     - git clone --depth=1 --branch=master https://github.com/goto40/textX.git
     - cd textX && python setup.py install
     - cd ../itemlang
+    - sudo apt-get -qq update
+    - sudo apt-get install -y g++ cmake
 install:
     - python setup.py install
 script:
     - py.test tests
+    - cd system_tests
+    - sh run.sh
