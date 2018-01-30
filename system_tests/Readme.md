@@ -39,3 +39,4 @@ Here we make a system test including the code generator and other compilers.
 
     $ sh run.sh # (Linux)
 
+The test run should report no error.
