@@ -4,7 +4,10 @@ Here we make a system test including the code generator and other compilers.
 
 ## Structure
 
-    cpp
+    ------------------------------------------------
+    cpp : cmake based C++ subproject (tests, algos)
+    ------------------------------------------------
+
     cpp/catch   : (dependency)
     cpp/GSL     : (dependency)
     cpp/src     : library code (algos)
@@ -12,7 +15,11 @@ Here we make a system test including the code generator and other compilers.
     cpp/src-gen : (generated code)
     cpp/build   : (created by run.sh)
 
-    model
+
+    ------------------------------------------------
+    model : model data, used by other submodels
+    ------------------------------------------------
+
     model/items : item models
     model/algos : algo models
 
