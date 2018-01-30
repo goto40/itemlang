@@ -24,6 +24,7 @@ Package:
     "}"
 ;
 
+// ---------------------------------------------------------------------
 TargetNamespace:
     "target_namespace" name=STRING
 ;
@@ -44,6 +45,8 @@ PythonType:
 PythonConstructType:
     "python-construct" ":" type=STRING?
 ;
+
+// ---------------------------------------------------------------------
 Struct:
     "struct" name=ID "{"
     attributes+=Attribute*
@@ -61,6 +64,8 @@ ScalarAttribute:
 ArrayAttribute:
     "array" name=ID ":" type=[Type|FQN] ("[" array_dimensions+=ArrayDimension "]")+
 ;
+
+// ---------------------------------------------------------------------
 ArrayDimension:
     array_size=Sum
     (":" array_index_name=ID)?
@@ -86,6 +91,7 @@ ScalarRef:
     ref0=[ScalarAttribute] ("." ref1=[ScalarAttribute] ("." ref2=[ScalarAttribute] )?)?
 ;
 
+// ---------------------------------------------------------------------
 Import:
     "import" importURI=STRING
 ;
