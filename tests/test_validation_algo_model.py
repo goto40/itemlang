@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import itemlang.algoc.metamodel as algo_metamodel
 from textx import children_of_type
 from pytest import raises

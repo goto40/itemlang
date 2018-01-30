@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from textx import children_of_type
 
 def check_model(model):
