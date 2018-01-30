@@ -14,6 +14,7 @@ cpp : cmake based C++ subproject (tests, algos)
 The cmake project generates code from the model
 
 ::
+
     Input:                  model files
     Intermediate output:    code in src-gen
     Output:                 a library (Algo.lib.a)
@@ -22,6 +23,7 @@ The cmake project generates code from the model
 Subdirectories:
 
 ::
+
     cpp/catch   : (dependency)
     cpp/GSL     : (dependency)
     cpp/src     : library code (algos)
@@ -34,6 +36,7 @@ model : model data, used by other submodels
 ------------------------------------------------
 
 ::
+
     model/items : item models
     model/algos : algo models
 
@@ -41,12 +44,14 @@ model : model data, used by other submodels
 Get the project
 =================
 ::
+
     $ git clone https://github.com/goto40/itemlang --recurse-submodules 
 
 
 Build and run
 =================
 ::
+
     $ sh run.sh # (Linux)
 
 The test run should report no error.
