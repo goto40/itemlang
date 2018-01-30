@@ -8,6 +8,12 @@ Here we make a system test including the code generator and other compilers.
     cpp : cmake based C++ subproject (tests, algos)
     ------------------------------------------------
 
+        The cmake project generates code from the model
+        Input:                  model files
+        Intermediate output:    code in src-gen
+        Output:                 a library (Algo.lib.a)
+        Output:                 unittests (Tester.exe)
+
     cpp/catch   : (dependency)
     cpp/GSL     : (dependency)
     cpp/src     : library code (algos)
