@@ -9,5 +9,8 @@ algo_package example {
         out c: example.Simple
     }
 
-    C++ simple_adder1: SimpleAdder
+    algo_package impl {
+        target_namespace "algos"
+        C++ simple_adder1: SimpleAdder
+    }
 }

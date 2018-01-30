@@ -29,6 +29,6 @@ add_executable(${TSTNAME} ${TSTFILES})
 
 add_custom_target(
     item_code
-    COMMAND itemc items/*.item --generate-cpp
+    COMMAND itemc ../model/items/*.item --generate-cpp
 )
 add_dependencies(${TSTNAME} item_code)
