@@ -2,8 +2,10 @@
 System tests
 ================
 
-Here, we make a system test including the code generator and other compilers.
+.. image:: https://travis-ci.org/goto40/itemlang.svg?branch=master
+    :target: https://travis-ci.org/goto40/itemlang
 
+Here, we make a system test including the code generator and other compilers.
 
 File structure
 ================

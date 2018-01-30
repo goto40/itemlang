@@ -2,6 +2,9 @@
 Custom interface definition language
 ====================================
 
+.. image:: https://travis-ci.org/goto40/itemlang.svg?branch=master
+    :target: https://travis-ci.org/goto40/itemlang
+
 This is an example of custom interface definition language. It mainly targets C++.
 
 Rough outline
