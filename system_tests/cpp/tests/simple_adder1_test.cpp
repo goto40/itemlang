@@ -35,5 +35,6 @@ TEST_CASE( "simple_adder1 execption test (manual)", "[algo]" ) {
         b.a_ui16[k] = (k+1)*100;
     }
 
+    // throws, since a and b do not have the same size:
     REQUIRE_THROWS_AS(algos::simple_adder1(a,b,c), std::runtime_error);
 }
