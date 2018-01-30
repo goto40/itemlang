@@ -2,7 +2,7 @@
 Custom interface definition language
 ====================================
 
-This is an example of custom interface definition language. It mainly tagrets C++.
+This is an example of custom interface definition language. It mainly targets C++.
 
 Rough outline
 ====================================
@@ -47,11 +47,11 @@ Use the code generator
 --------------------------
 
 Get help:
-
+::
         $ itemc --help
 
 
 Run code generation for C++:
-
+::
         $ itemc example.myidl --generate-cpp
 
