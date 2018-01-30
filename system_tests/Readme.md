@@ -2,7 +2,7 @@
 
 Here we make a system test including the code generator and other compilers.
 
-## Structure
+## File structure
 
     ------------------------------------------------
     cpp : cmake based C++ subproject (tests, algos)
@@ -29,7 +29,7 @@ Here we make a system test including the code generator and other compilers.
     $ git clone https://github.com/goto40/itemlang --recurse-submodules 
 
 
-## Build & Run
+## Build and run
 
     $ sh run.sh # (Linux)
 
