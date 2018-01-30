@@ -94,7 +94,7 @@ namespace attributes {
                 template<class MetaInfo, class Owner, class T>
                 void visitRawTypeArray(const Owner&, const T& value) {
                     for (const auto &v: value) {
-                        out.write( reinterpret_cast<const char*>( &v ), sizeof( T::value_type ) );
+                        out.write( reinterpret_cast<const char*>( &v ), sizeof( typename T::value_type ) );
                     }
                 }
 
@@ -138,7 +138,7 @@ namespace attributes {
                 template<class MetaInfo, class Owner, class T>
                 void visitRawTypeArray(Owner&, T& value) {
                     for (auto &v: value) {
-                        inp.read( reinterpret_cast<char*>( &v ), sizeof( T::value_type ) );
+                        inp.read( reinterpret_cast<char*>( &v ), sizeof( typename T::value_type ) );
                     }
                 }
 
