@@ -1,52 +1,18 @@
 package types {
-    type int {
-        C++:    "int32_t" including '<cstdint>'
-        python: "int" with format "i"
-        python-construct: "Int32sb"
-    }
-    type float {
-        C++:    "float"
-        python: "float" with format "f"
-        python-construct: "Float32b"
-    }
-    type UINT8 {
-        C++:    "uint8_t"  including '<cstdint>'
-        python: "uint8"  from 'numpy' with format "B"
-        python-construct: "Int8ub"
-    }
-    type UINT16 {
-        C++:    "uint16_t" including '<cstdint>'
-        python: "uint16" from 'numpy' with format "H"
-        python-construct: "Int16ub"
-    }
-    type UINT32 {
-        C++:    "uint32_t" including '<cstdint>'
-        python: "uint32" from 'numpy' with format "I"
-        python-construct: "Int32ub"
-    }
-    type UINT64 {
-        C++:    "uint64_t" including '<cstdint>'
-        python: "uint64" from 'numpy' with format "Q"
-        python-construct: "Int64ub"
-    }
-    type SINT8 {
-        C++:    "int8_t"  including '<cstdint>'
-        python: "int8" from 'numpy' with format "b"
-        python-construct: "Int8sb"
-    }
-    type SINT16 {
-        C++:    "int16_t" including '<cstdint>'
-        python: "int16" from 'numpy' with format "h"
-        python-construct: "Int16sb"
-    }
-    type SINT32 {
-        C++:    "int32_t" including '<cstdint>'
-        python: "int32" from 'numpy' with format "i"
-        python-construct: "Int32sb"
-    }
-    type SINT64 {
-        C++:    "int64_t" including '<cstdint>'
-        python: "int64" from 'numpy' with format "q"
-        python-construct: "Int64sb"
-    }
+    type int        as signed   with 32 bits
+    type float      as float    with 32 bits
+
+    type FLOAT32    as float    with 32 bits
+    type FLOAT64    as float    with 64 bits
+    type FLOAT128   as float    with 128 bits
+
+    type UINT8      as unsigned with 8  bits
+    type UINT16     as unsigned with 16 bits
+    type UINT32     as unsigned with 32 bits
+    type UINT64     as unsigned with 64 bits
+
+    type SINT8      as signed   with 8  bits
+    type SINT16     as signed   with 16 bits
+    type SINT32     as signed   with 32 bits
+    type SINT64     as signed   with 64 bits
 }

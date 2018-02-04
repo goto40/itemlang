@@ -29,6 +29,34 @@ def full_path_to_file_name(struct):
     return filename + "/" + struct.name + ".h"
 
 
+def has_include(t):
+    if isinstance(t, Struct):
+        return True
+    else:
+        assert isinstance(t, RawType), "unexpected type found."
+        if t.cpptype:
+            return t.cpptype.including != None
+        else:
+            if t.genericType=='signed':
+                return True
+            elif t.genericType == 'unsigned':
+                return True
+        return False
+
+def get_include(t):
+    if isinstance(t, Struct):
+        return full_path_to_file_name(t)
+    else:
+        assert isinstance(t, RawType), "unexpected type found."
+        if t.cpptype:
+            assert t.cpptype, "unexpected hasInclude/getInclude combination."
+            return t.cpptype.including
+        else:
+            if t.genericType=='signed':
+                return "<cstdint>"
+            elif t.genericType == 'unsigned':
+                return "<cstdint>"
+
 def fqn(t):
     if isinstance(t, Struct):
         struct = t
@@ -38,9 +66,27 @@ def fqn(t):
         return fqn_result + "::" + struct.name
     else:
         assert isinstance(t, RawType), "unexpected type found."
-        cpptype = t.cpptype
-        assert cpptype, "C++ type specification is required for {} in file {}".format(t.name, model_root(t)._tx_filename)
-        return cpptype.type
+        if t.cpptype:
+            cpptype = t.cpptype
+            return cpptype.type
+        else:
+            if t.genericType=='signed':
+                return "int{}_t".format(t.genericBits.bits)
+            elif t.genericType == 'unsigned':
+                return "uint{}_t".format(t.genericBits.bits)
+            elif t.genericType == 'float':
+                if t.genericBits.bits == 32:
+                    return "float"
+                elif t.genericBits.bits == 64:
+                    return "double"
+                elif t.genericBits.bits == 128:
+                    return "long double"
+                else:
+                    raise Exception("unexpected, unknown float with {} bits for ".format(t.genericBits.bits, t.name,
+                                                                                          model_root(t)._tx_filename))
+            else:
+                raise Exception("unexpected, C++ type specification is required for {} in file {}".format(t.name,
+                                                                                                            model_root(t)._tx_filename))
 
 
 def default_value_init_code(attribute, force=False):

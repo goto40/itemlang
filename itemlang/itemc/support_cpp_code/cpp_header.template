@@ -4,8 +4,8 @@
 #include "{{cpptool.full_path_to_file_name(s)}}"
 {% endfor %}
 {% for rt in struct.get_raw_types_of_attributes() %}
-{% if rt.cpptype and rt.cpptype.including %}
-#include {{rt.cpptype.including}}
+{% if cpptool.has_include(rt) %}
+#include {{cpptool.get_include(rt)}}
 {% endif %}
 {% endfor %}
 
