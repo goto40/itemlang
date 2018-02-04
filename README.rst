@@ -58,3 +58,16 @@ Run code generation for C++:
 ::
         $ itemc example.myidl --generate-cpp
 
+
+Current state
+-------------------
+ * General:
+  * Check syntax of defaut values (later also min/max), differentiate between float/signed/unsigned)
+  * Check constant fields (not included)
+  * Check bitfields (not included)
+ * C++: working
+ * Python: no so well tested, working ... (also check Python 3.7 data classes)
+ * Octave:
+  * no checks (add check consistency function; automatically call after read, before write)
+  * no tests (just a demo; do we have unittests like in matlab?)
+ * Python-construct: not intgerated
