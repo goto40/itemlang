@@ -11,3 +11,4 @@ assert(d.n == d2.n)
 assert(d.x == d2.x)
 assert(d.a_ui16 == d2.a_ui16)
 
+disp("demo.m: all tests passed")
