@@ -1,4 +1,4 @@
-function load_{{ struct.name }}
+function read_{{ struct.name }}
 % this loads data from a file
 
 end

@@ -150,13 +150,13 @@ def _generate_octave_code(idl_model, srcgen_folder, this_folder):
         trim_blocks=True,
         lstrip_blocks=True)
     # Load Java template
-    for func_name in ["load"]:
+    for func_name in ["read","write","create"]:
         template = jinja_env.get_template('octave_{}.template'.format(func_name))
         for struct in children_of_type("Struct", idl_model):
             struct_folder = join(srcgen_folder, octtool.path_to_file_name(struct))
             if not exists(struct_folder):
                 makedirs(struct_folder)
-            with open(join(octtool.full_path_to_file_name(struct,func_name), 'w')) as f:
+            with open(join(srcgen_folder, octtool.full_path_to_file_name(struct,func_name)), 'w') as f:
                 f.write(template.render(struct=struct,
                                         octtool=octtool
                                         ))

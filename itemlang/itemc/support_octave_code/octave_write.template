@@ -1,0 +1,4 @@
+function write_{{ struct.name }}
+% this writes data to a file
+
+end
