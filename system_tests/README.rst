@@ -43,6 +43,11 @@ model : model data, used by other submodels
     model/algos : algo models
 
 
+octave: octave subproject (tests)
+------------------------------------------------
+(work in progress)
+
+
 Get the project
 =================
 ::
