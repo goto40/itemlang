@@ -34,7 +34,7 @@ Subdirectories:
     cpp/build   : (created by run.sh)
 
 
-model : model data, used by other submodels
+model : model data, used by other subprojects
 ------------------------------------------------
 
 ::
