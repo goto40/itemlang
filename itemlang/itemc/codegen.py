@@ -10,17 +10,14 @@ from shutil import copyfile
 from os.path import dirname, join, exists, expanduser, abspath
 import jinja2
 from textx import children_of_type
-import itemlang.itemc.support_cpp_code.custom_idl_cpptool as cpptool
-import itemlang.itemc.support_python_code.custom_idl_pytool as pytool
-import itemlang.itemc.support_python_construct_code.custom_idl_pyctool as pyctool
 
-def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False, generate_cpp=False, generate_python=False, generate_python_construct=False):
-
+def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False, generate_cpp=False, generate_python=False, generate_python_construct=False, generate_octave=False):
     this_folder = dirname(abspath(__file__))
     mm = custom_idl_metamodel.get_meta_model(
         generate_cpp=generate_cpp,
         generate_python=generate_python,
-        generate_python_construct=generate_python_construct
+        generate_python_construct=generate_python_construct,
+        generate_octave = generate_octave
     )
 
     # parse and validate
@@ -47,9 +44,12 @@ def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False,
         _generate_python_code(idl_model, srcgen_folder, this_folder)
     if generate_python_construct:
         _generate_python_construct_code(idl_model, srcgen_folder, this_folder)
+    if generate_octave:
+        _generate_octave_code(idl_model, srcgen_folder, this_folder)
 
 
 def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
+    import itemlang.itemc.support_cpp_code.custom_idl_cpptool as cpptool
     # attributes helper
     attributes_folder = join(srcgen_folder , "attributes")
     if not exists(attributes_folder):
@@ -76,6 +76,7 @@ def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
 
 
 def _generate_python_code(idl_model, srcgen_folder, this_folder):
+    import itemlang.itemc.support_python_code.custom_idl_pytool as pytool
     # attributes helper
     attributes_folder = join(srcgen_folder , "attributes")
     if not exists(attributes_folder):
@@ -113,6 +114,7 @@ def _generate_python_code(idl_model, srcgen_folder, this_folder):
                                     ))
 
 def _generate_python_construct_code(idl_model, srcgen_folder, this_folder):
+    import itemlang.itemc.support_python_construct_code.custom_idl_pyctool as pyctool
     jinja_env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(this_folder + "/support_python_construct_code"),
         trim_blocks=True,
@@ -138,4 +140,24 @@ def _generate_python_construct_code(idl_model, srcgen_folder, this_folder):
             f.write(template.render(struct=struct,
                                     pyctool=pyctool
                                     ))
+
+
+def _generate_octave_code(idl_model, srcgen_folder, this_folder):
+    import itemlang.itemc.support_octave_code.custom_idl_octtool as octtool
+    # Initialize template engine.
+    jinja_env = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(this_folder + "/support_octave_code"),
+        trim_blocks=True,
+        lstrip_blocks=True)
+    # Load Java template
+    for func_name in ["load"]:
+        template = jinja_env.get_template('octave_{}.template'.format(func_name))
+        for struct in children_of_type("Struct", idl_model):
+            struct_folder = join(srcgen_folder, octtool.path_to_file_name(struct))
+            if not exists(struct_folder):
+                makedirs(struct_folder)
+            with open(join(octtool.full_path_to_file_name(struct,func_name), 'w')) as f:
+                f.write(template.render(struct=struct,
+                                        octtool=octtool
+                                        ))
 

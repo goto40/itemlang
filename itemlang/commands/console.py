@@ -34,10 +34,13 @@ def algoc():
                         action='store_true', help='generate C++ code')
     parser.add_argument('--generate-python', dest='generate_python', default=False,
                         action='store_true', help='generate python code')
+    parser.add_argument('--generate-octave', dest='generate_octave', default=False,
+                        action='store_true', help='generate octave code')
 
     args = parser.parse_args()
     for model_file in args.model_files:
         algo_codegen(model_file=model_file, srcgen_folder=expanduser(args.srcgen),
                 generate_cpp=args.generate_cpp,
-                generate_python=args.generate_python)
+                generate_python=args.generate_python,
+                generate_octave=args.generate_octave)
 
