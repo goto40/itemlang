@@ -3,16 +3,18 @@ from textx import model_root
 
 def path_to_file_name(struct):
     filename = ""
-    if struct.parent.target_namespace:
-        filename = "/".join(struct.parent.target_namespace.name.split("."))
     return filename
 
 
 def full_path_to_file_name(struct,function_name):
     filename = ""
+    return filename + "{}.m".format(func_name(struct, function_name))
+
+def func_name(struct,function_name):
+    n=""
     if struct.parent.target_namespace:
-        filename = "/".join(struct.parent.target_namespace.name.split("."))
-    return filename + "/{}_{}.m".format(function_name,struct.name)
+        n = "_".join(struct.parent.target_namespace.name.split("."))+"_"
+    return "{}_{}{}".format(function_name,n,struct.name)
 
 def rawtype(t):
     if isinstance(t, Struct):

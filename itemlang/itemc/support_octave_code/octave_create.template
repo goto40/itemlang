@@ -1,4 +1,4 @@
-function data = create_{{ struct.name }}( ...
+function data = {{ octtool.func_name(struct,"create") }}( ...
     {% for attribute in struct.get_attributes_which_affects_size() %}
         p_{{ attribute.name }} {{ "," if not loop.last }} ...
     {% endfor %}
@@ -35,7 +35,7 @@ function data = create_{{ struct.name }}( ...
                     {% endfor %}
                 );
                 for k=1:numel(data.{{ attribute.name }})
-                    data.{{ attribute.name }}{k}=create_{{attribute.type.name}};
+                    data.{{ attribute.name }}{k}={{ octtool.func_name(attribute.type, "create") }}();
                 end
             {% endif %}
         {% endif %}
