@@ -30,12 +30,15 @@ TargetNamespace:
 ;
 Type: RawType|Struct;
 RawType:
-    "type" name=ID "{"
+    "type" name=ID 'as' genericType=GenericType genericBits=GenericBits? ("{"
         (cpptype = CppType)?
         (pythontype = PythonType)?
         (pythonconstructtype = PythonConstructType)?
-    "}"
+    "}")?
 ;
+GenericBits: 'with' bits=INT 'bits';
+GenericType: 'signed'|'unsigned'|'float'|'custom';
+
 CppType:
     "C++" ":" type=STRING ("including" including=STRING)?
 ;

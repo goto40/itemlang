@@ -31,10 +31,10 @@ def test_basic_python_code():
 """
 // model
 package types {
-type int    {   python: "int" with format "i" }
-type float  {   python: "float" with format "f" }
-type UINT8  {   python: "uint8"  from 'numpy' with format "B" }
-type UINT16 {   python: "uint16" from 'numpy' with format "H" }
+type int   as custom {   python: "int" with format "i" }
+type float as custom {   python: "float" with format "f" }
+type UINT8 as custom {   python: "uint8"  from 'numpy' with format "B" }
+type UINT16 as custom {   python: "uint16" from 'numpy' with format "H" }
 }
 package mypackage1 {
 target_namespace "mypackage1.test"

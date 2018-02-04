@@ -123,7 +123,8 @@ def get_meta_model(debug=False,**kwargs):
         "ScalarRef": object_processors.check_scalar_ref,
         "Struct": object_processors.CheckRawTypes(kwargs),
         "ArrayDimension": object_processors.check_array_dimensions,
-        "ArrayAttribute": object_processors.check_array_attribute
+        "ArrayAttribute": object_processors.check_array_attribute,
+        "RawType": object_processors.check_raw_type_has_defined_bits
     }
     if "object_processors" in kwargs:
         my_object_processors.update(kwargs["object_processors"])

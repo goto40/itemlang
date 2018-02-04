@@ -31,9 +31,9 @@ def test_validation_check_array_dimensions():
 """
 // model
 package types {
-    type int {}
-    type UINT16 {}
-    type float {}
+    type int as custom {}
+    type UINT16 as custom {}
+    type float as custom {}
 }
 package mypackage1 {
 target_namespace "mypackage1.test"
@@ -53,9 +53,9 @@ target_namespace "mypackage1.test"
                         """
                         // model
                         package types {
-                            type int {}
-                            type UINT16 {}
-                            type float {}
+                            type int as custom {}
+                            type UINT16 as custom {}
+                            type float as custom {}
                         }
                         package mypackage1 {
                         target_namespace "mypackage1.test"
@@ -75,9 +75,9 @@ target_namespace "mypackage1.test"
                         """
                         // model
                         package types {
-                            type int {}
-                            type UINT16 {}
-                            type float {}
+                            type int as custom {}
+                            type UINT16 as custom {}
+                            type float as custom {}
                         }
                         package mypackage1 {
                         target_namespace "mypackage1.test"

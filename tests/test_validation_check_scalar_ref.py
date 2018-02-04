@@ -31,9 +31,9 @@ def test_validation_check_scalar_ref():
 """
 // model
 package types {
-    type int {}
-    type UINT16 {}
-    type float {}
+    type int    as signed   with 32 bits
+    type UINT16 as unsigned with 16 bits
+    type float  as float    with 32 bits
 }
 package mypackage1 {
 target_namespace "mypackage1.test"
@@ -54,9 +54,9 @@ target_namespace "mypackage1.test"
                         """
                         // model
                         package types {
-                            type int {}
-                            type UINT16 {}
-                            type float {}
+                            type int    as signed   with 32 bits
+                            type UINT16 as unsigned with 16 bits
+                            type float  as float    with 32 bits
                         }
                         package mypackage1 {
                         target_namespace "mypackage1.test"

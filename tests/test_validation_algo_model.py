@@ -11,8 +11,8 @@ def test_validation_algo_model():
     with raises(Exception, match=r'.*define either algorithms OR items in one model file.*'):
         model = mm.model_from_str("""
         package data {
-            type int {}
-            type float  {}
+            type int as custom {}
+            type float as custom {}
             struct Data {
                 scalar n: int { default="10" }
                 array a: float[n]
