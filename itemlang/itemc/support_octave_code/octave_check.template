@@ -5,7 +5,10 @@ function {{ octtool.func_name(struct,"check") }}( data, parent_name )
     end
 
     if not(isa(data,"struct"))
-        error(sprintf("unexpected data to be a struct %s",parent.name));
+        error(sprintf("unexpected data to be a struct %s",parent_name));
+    end
+    if numel(fieldnames(data)) != {{ struct.attributes |length }}
+        error(sprintf("unexpected number of fields %s",parent_name));
     end
 
     {% for attribute in struct.attributes %}

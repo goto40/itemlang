@@ -1,5 +1,7 @@
 function {{ octtool.func_name(struct,"write") }}( myfile, data )
 
+    {{ octtool.func_name(struct,"check") }}(data)
+
     {% for attribute in struct.attributes %}
         {% if "ScalarAttribute" in attribute.__class__.__name__ %}
 

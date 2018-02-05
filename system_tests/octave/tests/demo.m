@@ -1,5 +1,5 @@
 d=create_project_example_Simple(3);
-d.x=257;
+d.x=uint16(257);
 d.a_ui16(1)=1;
 d.a_ui16(2)=2;
 d.a_ui16(3)=3;

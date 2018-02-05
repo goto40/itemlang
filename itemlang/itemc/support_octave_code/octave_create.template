@@ -9,6 +9,9 @@ function data = {{ octtool.func_name(struct,"create") }}( ...
     {% for attribute in struct.attributes %}
         {% if "ScalarAttribute" in attribute.__class__.__name__ %}
             {% if attribute.affects_size() %}
+                {% if not attribute.has_raw_type() %}
+        {{ octtool.func_name(attribute.type,"check") }}(p_{{ attribute.name }})
+                {% endif %}
         data.{{ attribute.name }} = {{octtool.rawtype(attribute.type)}}(p_{{ attribute.name }});
             {% else %}
         data.{{ attribute.name }} = {{octtool.rawtype(attribute.type)}}(0); % TODO: use default values if present
