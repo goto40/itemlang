@@ -150,7 +150,7 @@ def _generate_octave_code(idl_model, srcgen_folder, this_folder):
         trim_blocks=True,
         lstrip_blocks=True)
     # Load Java template
-    for func_name in ["read","write","create"]:
+    for func_name in ["read","write","create","check"]:
         template = jinja_env.get_template('octave_{}.template'.format(func_name))
         for struct in children_of_type("Struct", idl_model):
             struct_folder = join(srcgen_folder, octtool.path_to_file_name(struct))
