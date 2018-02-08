@@ -102,13 +102,6 @@ def get_meta_model(debug=False,**kwargs):
     from itemlang.itemc.metamodel_formula import Sum, Mul, Dif, Div, Val, ScalarRef
 
     grammar_file_name = '../grammar/CustomIDL.tx'
-    if "grammar_file_name" in kwargs:
-        grammar_file_name = kwargs["grammar_file_name"]
-    #print("USING {}".format(grammar_file_name))
-
-    other_classes = []
-    if "classes" in kwargs:
-        other_classes = kwargs["classes"]
 
     my_provider = {
         "*.*": scoping.ScopeProviderFullyQualifiedNamesWithImportURI(),
@@ -116,8 +109,6 @@ def get_meta_model(debug=False,**kwargs):
         "ScalarRef.ref1": scoping.ScopeProviderForSimpleRelativeNamedLookups("ref0.type.attributes"),
         "ScalarRef.ref2": scoping.ScopeProviderForSimpleRelativeNamedLookups("ref1.type.attributes"),
     }
-    if "provider" in kwargs:
-        my_provider.update(kwargs["provider"])
 
     my_object_processors = {
         "ScalarRef": object_processors.check_scalar_ref,
@@ -126,15 +117,12 @@ def get_meta_model(debug=False,**kwargs):
         "ArrayAttribute": object_processors.check_array_attribute,
         "RawType": object_processors.check_raw_type_has_defined_bits
     }
-    if "object_processors" in kwargs:
-        my_object_processors.update(kwargs["object_processors"])
 
     this_folder = dirname(abspath(__file__))
     mm = metamodel_from_file( os.path.join(this_folder,grammar_file_name), debug=debug,
-                              classes=[Sum,Mul,Dif,Div,Val,ScalarRef,RawType,Struct,ArrayAttribute,ScalarAttribute,ArrayDimension]+other_classes)
+                              classes=[Sum,Mul,Dif,Div,Val,ScalarRef,RawType,Struct,ArrayAttribute,ScalarAttribute,ArrayDimension])
 
     mm.register_scope_provider(my_provider)
-
     mm.register_obj_processors(my_object_processors)
 
     return mm

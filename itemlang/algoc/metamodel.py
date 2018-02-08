@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
-from os.path import dirname, abspath
-import itemlang.itemc.metamodel as item_metamodel
-import itemlang.algoc.object_processors as object_processors
+from os.path import dirname, abspath, join
+from textx import metamodel_from_file, children_of_type
+import textx.scoping as scoping
 
 class CustomAlgoBase(object):
     def __init__(self):
@@ -26,14 +26,26 @@ class Algo(CustomAlgoBase):
 
 
 def get_meta_model(debug=False,**kwargs):
+    grammar_file_name = '../grammar/CustomAlgoLang.tx'
+
+    my_provider = {
+        "*.*": scoping.ScopeProviderFullyQualifiedNamesWithImportURI(),
+    }
+
+    my_object_processors = {
+    }
+
     this_folder = dirname(abspath(__file__))
-    kwargs.update({
-        "grammar_file_name": "../grammar/CustomAlgoLang.tx",
-        "classes": [Algo],
-        "object_processors": {
-            "Model": object_processors.check_model,
-        },
-    })
-    mm = item_metamodel.get_meta_model(debug,**kwargs)
+
+    mm = metamodel_from_file( join(this_folder,grammar_file_name), debug=debug,
+                              classes=[Algo])
+    mm.register_scope_provider(my_provider)
+    mm.register_obj_processors(my_object_processors)
+
+    if not scoping.MetaModelProvider.knows("*.item"):
+        import itemlang.itemc.metamodel as imetamodel
+        imm = imetamodel.get_meta_model(debug, **kwargs)
+        scoping.MetaModelProvider.add_metamodel("*.item",imm)
+        scoping.MetaModelProvider.add_metamodel("*.inc",imm)
 
     return mm
