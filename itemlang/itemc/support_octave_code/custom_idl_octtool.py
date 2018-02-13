@@ -1,5 +1,5 @@
 from itemlang.itemc.metamodel import Struct, RawType
-from textx import model_root
+from textx import get_model
 
 def path_to_file_name(struct):
     filename = ""
@@ -36,7 +36,7 @@ def rawtype(t):
                     return "double"
                 else:
                     raise Exception("unexpected, unknown float with {} bits for ".format(t.genericBits.bits, t.name,
-                                                                                          model_root(t)._tx_filename))
+                                                                                          get_model(t)._tx_filename))
             else:
                 raise Exception("unexpected, oct type specification is required for {} in file {}".format(t.name,
-                                                                                                            model_root(t)._tx_filename))
+                                                                                                            get_model(t)._tx_filename))
