@@ -4,7 +4,7 @@ from os import mkdir,makedirs
 from shutil import copyfile
 from os.path import dirname, join, exists, expanduser, abspath
 import jinja2
-from textx import children_of_type
+from textx import get_children_of_type
 import itemlang.algoc.support_cpp_code.custom_algo_cpptool as cpptool
 
 def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False, generate_cpp=False, generate_python=False, generate_python_construct=False):
@@ -55,7 +55,7 @@ def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
         lstrip_blocks=True)
     # Load Java template
     template = jinja_env.get_template('cpp_header.template')
-    for algo in children_of_type("CppAlgo", idl_model):
+    for algo in get_children_of_type("CppAlgo", idl_model):
         # For each entity generate java file
         algo_folder = join(srcgen_folder, cpptool.path_to_file_name(algo))
         if not exists(algo_folder):
