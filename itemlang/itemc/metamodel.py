@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from os.path import dirname, abspath
-from textx import metamodel_from_file, children_of_type
+from textx import metamodel_from_file, get_children_of_type
 import os
 import textx.scoping as scoping
 import textx.scoping_tools as scoping_tools
@@ -66,7 +66,7 @@ class ScalarAttribute(CustomIdlBase):
         struct = scoping_tools.get_recursive_parent_with_typename(self, "Struct")
         for a in filter(lambda x: type(x) is ArrayAttribute, struct.attributes):
             for d in a.array_dimensions:
-                for ref in children_of_type("ScalarRef", d.array_size):
+                for ref in get_children_of_type("ScalarRef", d.array_size):
                     if self is ref.ref0:
                         return True
         return False

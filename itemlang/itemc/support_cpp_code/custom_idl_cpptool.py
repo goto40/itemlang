@@ -1,5 +1,5 @@
 from itemlang.itemc.metamodel import Struct, RawType
-from textx import model_root
+from textx import get_model
 
 def open_namespace(namespace):
     res = ""
@@ -83,10 +83,10 @@ def fqn(t):
                     return "long double"
                 else:
                     raise Exception("unexpected, unknown float with {} bits for ".format(t.genericBits.bits, t.name,
-                                                                                          model_root(t)._tx_filename))
+                                                                                          get_model(t)._tx_filename))
             else:
                 raise Exception("unexpected, C++ type specification is required for {} in file {}".format(t.name,
-                                                                                                            model_root(t)._tx_filename))
+                                                                                                            get_model(t)._tx_filename))
 
 
 def default_value_init_code(attribute, force=False):

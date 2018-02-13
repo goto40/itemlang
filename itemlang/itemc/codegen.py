@@ -9,7 +9,7 @@ from os import mkdir,makedirs
 from shutil import copyfile
 from os.path import dirname, join, exists, expanduser, abspath
 import jinja2
-from textx import children_of_type
+from textx import get_children_of_type
 
 def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False, generate_cpp=False, generate_python=False, generate_python_construct=False, generate_octave=False):
     this_folder = dirname(abspath(__file__))
@@ -63,7 +63,7 @@ def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
         lstrip_blocks=True)
     # Load Java template
     template = jinja_env.get_template('cpp_header.template')
-    for struct in children_of_type("Struct", idl_model):
+    for struct in get_children_of_type("Struct", idl_model):
         # For each entity generate java file
         struct_folder = join(srcgen_folder, cpptool.path_to_file_name(struct))
         if not exists(struct_folder):
@@ -92,7 +92,7 @@ def _generate_python_code(idl_model, srcgen_folder, this_folder):
         lstrip_blocks=True)
     # Load Java template
     template = jinja_env.get_template('python.template')
-    for struct in children_of_type("Struct", idl_model):
+    for struct in get_children_of_type("Struct", idl_model):
         # For each entity generate java file
         struct_folder = join(srcgen_folder, pytool.path_to_file_name(struct))
         if not exists(struct_folder):
@@ -121,7 +121,7 @@ def _generate_python_construct_code(idl_model, srcgen_folder, this_folder):
         lstrip_blocks=True)
     # Load Java template
     template = jinja_env.get_template('python-construct.template')
-    for struct in children_of_type("Struct", idl_model):
+    for struct in get_children_of_type("Struct", idl_model):
         # For each entity generate java file
         struct_folder = join(srcgen_folder, pyctool.path_to_file_name(struct))
         if not exists(struct_folder):
@@ -152,7 +152,7 @@ def _generate_octave_code(idl_model, srcgen_folder, this_folder):
     # Load Java template
     for func_name in ["read","write","create","check"]:
         template = jinja_env.get_template('octave_{}.template'.format(func_name))
-        for struct in children_of_type("Struct", idl_model):
+        for struct in get_children_of_type("Struct", idl_model):
             struct_folder = join(srcgen_folder, octtool.path_to_file_name(struct))
             if not exists(struct_folder):
                 makedirs(struct_folder)

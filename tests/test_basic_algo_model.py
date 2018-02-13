@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import itemlang.algoc.metamodel as algo_metamodel
-from textx import children_of_type
+from textx import get_children_of_type
 from os.path import join, dirname, abspath
 
 def test_basic_algo_model():
@@ -8,7 +8,7 @@ def test_basic_algo_model():
     mm=algo_metamodel.get_meta_model();
     model = mm.model_from_file(join(this_folder, "algos/simple_model.algo"))
 
-    algos = children_of_type("Algo", model)
+    algos = get_children_of_type("Algo", model)
     assert len(algos)==1
     algo = algos[0]
 
