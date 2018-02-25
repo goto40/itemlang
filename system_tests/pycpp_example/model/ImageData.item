@@ -1,0 +1,12 @@
+import "types.inc"
+
+package items {
+    target_namespace "items"
+
+    struct ImageData {
+        scalar h        : types.UINT32 {default="200"}
+        scalar w        : types.UINT32 {default="320"}
+        array  data_ui8 : types.UINT8[h:height][w:width]
+    }    
+}
+
