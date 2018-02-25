@@ -1,4 +1,4 @@
-import struct
+import struct as structlib
 
 def pprint(struct):
     class Visitor:
@@ -61,3 +61,63 @@ def pprint(struct):
     inner_visitor = Visitor(2)
     struct.accept(inner_visitor)
     return "{} {{\n{}}}\n".format(type(struct).__name__,inner_visitor.return_text)
+
+def bin_write(struct, myfile):
+    class Visitor:
+        def __init__(self, thefile):
+            self.f=thefile
+
+        def visitRawTypeScalar(self, struct, item, meta):
+            d=structlib.pack("={}".format(meta['format']),struct.__getattr__(item))
+            self.f.write(d)
+
+        def visitStructuredScalar(self, struct, item, meta):
+            inner_visitor = Visitor(self.f)
+            struct.__getattr__(item).accept(inner_visitor)
+
+        def visitRawTypeArray(self, struct, item, meta):
+            d=structlib.pack("={}{}".format(struct.__getattr__(item).size, meta['format']),*(struct.__getattr__(item).flatten()))
+            self.f.write(d)
+
+        def visitStructuredArray(self, struct, item, meta):
+            a = struct.__getattr__(item)
+            for v in a.flat:
+                inner_visitor = Visitor(self.f)
+                v.accept(inner_visitor)
+
+    inner_visitor = Visitor(myfile)
+    struct.accept(inner_visitor)
+
+def bin_read(struct, myfile):
+    class Visitor:
+        def __init__(self, thefile):
+            self.f=thefile
+
+        def visitRawTypeScalar(self, struct, item, meta):
+            fmt="={}".format(meta['format'])
+            n=structlib.calcsize(fmt)
+            d=self.f.read(n)
+            assert len(d)==n
+            struct.__setattr__(item, struct.__getattr__(item).__class__(structlib.unpack(fmt,d)[0]))
+
+        def visitStructuredScalar(self, struct, item, meta):
+            inner_visitor = Visitor(self.f)
+            struct.__getattr__(item).accept_and_init(inner_visitor)
+
+        def visitRawTypeArray(self, struct, item, meta):
+            fmt="={}{}".format(struct.__getattr__(item).size, meta['format'])
+            n=structlib.calcsize(fmt)
+            d=self.f.read(n)
+            assert len(d)==n
+            tmp = structlib.unpack(fmt,d)
+            struct.__getattr__(item).flat = tmp
+
+        def visitStructuredArray(self, struct, item, meta):
+            a = struct.__getattr__(item)
+            for v in a.flat:
+                inner_visitor = Visitor(self.f)
+                v.accept_and_init(inner_visitor)
+
+    inner_visitor = Visitor(myfile)
+    struct.accept_and_init(inner_visitor)
+

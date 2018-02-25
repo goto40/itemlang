@@ -4,8 +4,8 @@ from attributes.attributes import ReadOnlyAttribute, Attribute, DynamicArrayAttr
 import {{pytool.the_package(s)}}
 {% endfor %}
 {% for rt in struct.get_raw_types_of_attributes() %}
-{% if rt.pythontype and rt.pythontype.fromlib %}
-import {{rt.pythontype.fromlib}} # {{rt.name}}
+{% if pytool.has_import(rt) %}
+import {{pytool.get_import(rt)}} # {{rt.name}}
 {% endif %}
 {% endfor %}
 
@@ -74,7 +74,7 @@ class {{struct.name}}(BaseStruct):
 {% for attribute in struct.attributes %}
     {% if "ScalarAttribute" in attribute.__class__.__name__ %}
         {% if attribute.has_raw_type() %}
-        visitor.visitRawTypeScalar( self, "{{attribute.name}}", self.__dict__["attribute.name"]._meta_info );
+        visitor.visitRawTypeScalar( self, "{{attribute.name}}", self.__dict__["{{attribute.name}}"]._meta_info );
         {% else %}
         visitor.visitStructuredScalar( self, "self.{{attribute.name}}", self.__dict__["{{attribute.name}}"]._meta_info );
         {% endif %}

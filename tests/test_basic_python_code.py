@@ -117,7 +117,19 @@ struct Simple {
   a_ui16[] = [ 0 45 90 ]
 }
 """
-    #x.byteswap().tobytes()
+    # I/O
+    with open('data.bin', 'wb') as f:
+        toolLib.bin_write(simple, f)
+
+    simple2 = SimpleLib.Simple()
+    with open('data.bin', 'rb') as f:
+        toolLib.bin_read(simple2, f)
+
+    assert simple.n == simple2.n
+    assert simple.x == simple2.x
+    assert len(simple.a_ui16) == len(simple2.a_ui16)
+    for k in range(len(simple.a_ui16)):
+        assert simple.a_ui16[k] == simple2.a_ui16[k]
 
     #################################
     # END
