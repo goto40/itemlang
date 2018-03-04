@@ -2,8 +2,8 @@ from __future__ import unicode_literals
 from os.path import dirname, abspath
 from textx import metamodel_from_file, get_children_of_type
 import os
-import textx.scoping as scoping
-import textx.scoping_tools as scoping_tools
+import textx.scoping.providers as scoping_providers
+import textx.scoping.tools as scoping_tools
 from functools import reduce
 import itemlang.itemc.object_processors as object_processors
 
@@ -103,11 +103,11 @@ def get_meta_model(debug=False,**kwargs):
 
     grammar_file_name = '../grammar/CustomIDL.tx'
 
-    my_provider = {
-        "*.*": scoping.ScopeProviderFullyQualifiedNamesWithImportURI(),
-        "ScalarRef.ref0": scoping.ScopeProviderForSimpleRelativeNamedLookups("parent(Struct).attributes"),
-        "ScalarRef.ref1": scoping.ScopeProviderForSimpleRelativeNamedLookups("ref0.type.attributes"),
-        "ScalarRef.ref2": scoping.ScopeProviderForSimpleRelativeNamedLookups("ref1.type.attributes"),
+    my_providers = {
+        "*.*": scoping_providers.FQNImportURI(),
+        "ScalarRef.ref0": scoping_providers.RelativeName("parent(Struct).attributes"),
+        "ScalarRef.ref1": scoping_providers.RelativeName("ref0.type.attributes"),
+        "ScalarRef.ref2": scoping_providers.RelativeName("ref1.type.attributes"),
     }
 
     my_object_processors = {
@@ -122,7 +122,7 @@ def get_meta_model(debug=False,**kwargs):
     mm = metamodel_from_file( os.path.join(this_folder,grammar_file_name), debug=debug,
                               classes=[Sum,Mul,Dif,Div,Val,ScalarRef,RawType,Struct,ArrayAttribute,ScalarAttribute,ArrayDimension])
 
-    mm.register_scope_provider(my_provider)
+    mm.register_scope_providers(my_providers)
     mm.register_obj_processors(my_object_processors)
 
     return mm

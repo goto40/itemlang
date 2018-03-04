@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from os.path import dirname, abspath, join
 from textx import metamodel_from_file
+import textx.scoping.providers as scoping_providers
 import textx.scoping as scoping
 
 class CustomAlgoBase(object):
@@ -28,8 +29,8 @@ class Algo(CustomAlgoBase):
 def get_meta_model(debug=False,**kwargs):
     grammar_file_name = '../grammar/CustomAlgoLang.tx'
 
-    my_provider = {
-        "*.*": scoping.ScopeProviderFullyQualifiedNamesWithImportURI(),
+    my_providers = {
+        "*.*": scoping_providers.FQNImportURI(),
     }
 
     my_object_processors = {
@@ -39,13 +40,13 @@ def get_meta_model(debug=False,**kwargs):
 
     mm = metamodel_from_file( join(this_folder,grammar_file_name), debug=debug,
                               classes=[Algo])
-    mm.register_scope_provider(my_provider)
+    mm.register_scope_providers(my_providers)
     mm.register_obj_processors(my_object_processors)
 
     if not scoping.MetaModelProvider.knows("*.item"):
         import itemlang.itemc.metamodel as imetamodel
         imm = imetamodel.get_meta_model(debug, **kwargs)
-        scoping.MetaModelProvider.add_metamodel("*.item",imm)
-        scoping.MetaModelProvider.add_metamodel("*.inc",imm)
+        scoping.MetaModelProvider.add_metamodel("*.item", imm)
+        scoping.MetaModelProvider.add_metamodel("*.inc", imm)
 
     return mm
