@@ -6,10 +6,14 @@ python:
 before_install:
     # Installing textx etc. as a dependency
     - cd ..
+    # stuff for the python
     - pip install jinja2
     - pip install arpeggio
     - pip install pytest
     - pip install numpy
+    # stuff for compiling cpp
+    - sudo apt-get install -qq catch
+    - sudo apt-get install -qq libmsgsl-dev
     - git clone --depth=1 --branch=master https://github.com/goto40/textX.git
     - cd textX && python setup.py install
     - cd ../itemlang
