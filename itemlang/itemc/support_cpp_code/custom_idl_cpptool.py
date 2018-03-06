@@ -1,6 +1,7 @@
 from itemlang.itemc.metamodel import Struct, RawType
 from textx import get_model
 
+
 def open_namespace(namespace):
     res = ""
     for n in namespace.target_namespace.name.split("."):
@@ -37,11 +38,12 @@ def has_include(t):
         if t.cpptype:
             return t.cpptype.including != None
         else:
-            if t.genericType=='signed':
+            if t.genericType == 'signed':
                 return True
             elif t.genericType == 'unsigned':
                 return True
         return False
+
 
 def get_include(t):
     if isinstance(t, Struct):
@@ -52,10 +54,11 @@ def get_include(t):
             assert t.cpptype, "unexpected hasInclude/getInclude combination."
             return t.cpptype.including
         else:
-            if t.genericType=='signed':
+            if t.genericType == 'signed':
                 return "<cstdint>"
             elif t.genericType == 'unsigned':
                 return "<cstdint>"
+
 
 def fqn(t):
     if isinstance(t, Struct):
@@ -70,7 +73,7 @@ def fqn(t):
             cpptype = t.cpptype
             return cpptype.type
         else:
-            if t.genericType=='signed':
+            if t.genericType == 'signed':
                 return "int{}_t".format(t.genericBits.bits)
             elif t.genericType == 'unsigned':
                 return "uint{}_t".format(t.genericBits.bits)
@@ -82,11 +85,14 @@ def fqn(t):
                 elif t.genericBits.bits == 128:
                     return "long double"
                 else:
-                    raise Exception("unexpected, unknown float with {} bits for ".format(t.genericBits.bits, t.name,
-                                                                                          get_model(t)._tx_filename))
+                    raise Exception("unexpected, unknown float with {} bits for ".format(
+                        t.genericBits.bits,
+                        t.name,
+                        get_model(t)._tx_filename))
             else:
-                raise Exception("unexpected, C++ type specification is required for {} in file {}".format(t.name,
-                                                                                                            get_model(t)._tx_filename))
+                raise Exception("unexpected, C++ type specification is required for {} in file {}".format(
+                    t.name,
+                    get_model(t)._tx_filename))
 
 
 def default_value_init_code(attribute, force=False):

@@ -6,6 +6,7 @@ from shutil import rmtree
 import os.path
 from pytest import raises
 
+
 def test_validation_CheckRawTypes():
     """
     checks that addon info for used types for specific languages are defined.
@@ -18,7 +19,7 @@ def test_validation_CheckRawTypes():
     #################################
 
     this_folder = dirname(__file__)
-    dest_folder = os.path.join(this_folder,"src-gen")
+    dest_folder = os.path.join(this_folder, "src-gen")
     # cleanup old generated code
     if exists(dest_folder):
         rmtree(dest_folder)
@@ -29,20 +30,20 @@ def test_validation_CheckRawTypes():
     codegen.codegen(srcgen_folder=dest_folder,
                     generate_cpp=True,
                     model_string=
-"""
-// model
-package types {
-    type int as custom { C++: "int"}
-    type UINT16 as custom {}
-    type float as custom {}
-}
-package mypackage1 {
-target_namespace "mypackage1.test"
-    struct Simple {
-        scalar x        : types.int
-    }
-}
-""")
+                    """
+                    // model
+                    package types {
+                        type int as custom { C++: "int"}
+                        type UINT16 as custom {}
+                        type float as custom {}
+                    }
+                    package mypackage1 {
+                    target_namespace "mypackage1.test"
+                        struct Simple {
+                            scalar x        : types.int
+                        }
+                    }
+                    """)
 
     # ---------------------------
     # error 1

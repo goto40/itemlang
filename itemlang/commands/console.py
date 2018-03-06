@@ -2,6 +2,7 @@ from os.path import expanduser
 from itemlang.itemc.codegen import codegen as item_codegen
 from itemlang.algoc.codegen import codegen as algo_codegen
 
+
 def itemc():
     import argparse
     parser = argparse.ArgumentParser(description='generate code for the item model.')
@@ -21,11 +22,12 @@ def itemc():
     args = parser.parse_args()
     for model_file in args.model_files:
         item_codegen(model_file=model_file, srcgen_folder=expanduser(args.srcgen),
-                generate_cpp=args.generate_cpp,
-                generate_python=args.generate_python,
-                generate_python_construct=args.generate_python_construct,
-                generate_octave=args.generate_octave
-        )
+                     generate_cpp=args.generate_cpp,
+                     generate_python=args.generate_python,
+                     generate_python_construct=args.generate_python_construct,
+                     generate_octave=args.generate_octave
+                     )
+
 
 def algoc():
     import argparse
@@ -42,6 +44,5 @@ def algoc():
     args = parser.parse_args()
     for model_file in args.model_files:
         algo_codegen(model_file=model_file, srcgen_folder=expanduser(args.srcgen),
-                generate_cpp=args.generate_cpp,
-                generate_python=args.generate_python)
-
+                     generate_cpp=args.generate_cpp,
+                     generate_python=args.generate_python)

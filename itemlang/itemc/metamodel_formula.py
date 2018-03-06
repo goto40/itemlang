@@ -1,26 +1,27 @@
 from itemlang.itemc.metamodel import CustomIdlBase
 from functools import reduce
 
+
 class FormulaBase(CustomIdlBase):
     def __init__(self):
         super(FormulaBase, self).__init__()
 
-    def render_formula(self,**p):
+    def render_formula(self, **p):
         raise Exception("base class - not implmented")
 
     def has_fixed_size(self):
-        return reduce(lambda x,y: x and y, map(lambda x: x.has_fixed_size(), self.parts), True)
+        return reduce(lambda x, y: x and y, map(lambda x: x.has_fixed_size(), self.parts), True)
 
-    def render_formula(self,**p):
-        if len(self.parts)==1:
+    def render_formula(self, **p):
+        if len(self.parts) == 1:
             return self.parts[0].render_formula(**p)
         else:
-            return "("+self.operator.join( map(lambda x:x.render_formula(**p), self.parts) )+")"
+            return "(" + self.operator.join(map(lambda x: x.render_formula(**p), self.parts)) + ")"
 
 
 class Sum(FormulaBase):
     def __init__(self, **kwargs):
-        super(Sum,self).__init__()
+        super(Sum, self).__init__()
         self._init_xtextobj(**kwargs)
         self.operator = "+"
 
@@ -51,7 +52,7 @@ class Val(FormulaBase):
         super(Val, self).__init__()
         self._init_xtextobj(**kwargs)
 
-    def render_formula(self,**p):
+    def render_formula(self, **p):
         if self.ref:
             return self.ref.render_formula(**p)
         elif self.sum:
@@ -67,12 +68,13 @@ class Val(FormulaBase):
         else:
             return True
 
+
 class ScalarRef(FormulaBase):
     def __init__(self, **kwargs):
         super(ScalarRef, self).__init__()
         self._init_xtextobj(**kwargs)
 
-    def render_formula(self,separator=".",postfix="",prefix=""):
-        return prefix+separator.join(map(lambda x: x.name,
-                            filter(lambda x: x,
-                                   [self.ref0, self.ref1, self.ref2])))+postfix
+    def render_formula(self, separator=".", postfix="", prefix=""):
+        return prefix + separator.join(map(lambda x: x.name,
+                                           filter(lambda x: x,
+                                                  [self.ref0, self.ref1, self.ref2]))) + postfix
