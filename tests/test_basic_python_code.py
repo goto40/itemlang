@@ -110,13 +110,12 @@ def test_basic_python_code():
     simple.a_ui16 = np.linspace(0, 90, 3, dtype=np.uint16)
 
     simple_as_text = tool_lib.pprint(simple)
-    assert simple_as_text == """
-           Simple {
-             n = 3
-             x = 0
-             a_ui16[] = [ 0 45 90 ]
-           }
-           """
+    assert simple_as_text == """Simple {
+  n = 3
+  x = 0
+  a_ui16[] = [ 0 45 90 ]
+}
+"""
     # I/O
     with open('data.bin', 'wb') as f:
         tool_lib.bin_write(simple, f)
