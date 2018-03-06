@@ -4,10 +4,12 @@ python:
     - "3.5"
     - "3.6"
 before_install:
-    # Installing xtext etc. as a dependency
+    # Installing textx etc. as a dependency
     - cd ..
     - pip install jinja2
     - pip install arpeggio
+    - pip install pytest
+    - pip install numpy
     - git clone --depth=1 --branch=master https://github.com/goto40/textX.git
     - cd textX && python setup.py install
     - cd ../itemlang
