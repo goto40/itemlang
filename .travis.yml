@@ -13,7 +13,7 @@ before_install:
     - pip install numpy
     # stuff for compiling cpp
     - sudo apt-get install -qq catch
-    - sudo apt-get install -qq libmsgsl-dev
+    #- sudo apt-get install -qq libmsgsl-dev
     - git clone --depth=1 --branch=master https://github.com/goto40/textX.git
     - cd textX && python setup.py install
     - cd ../itemlang
