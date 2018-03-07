@@ -40,6 +40,13 @@ Generated C++ Code
    arguments and/or constexpr expressions and functions)
 
 
+Get the project
+--------------------------
+::
+
+    $ git clone https://github.com/goto40/itemlang --recurse-submodules 
+
+
 Installation
 --------------------------
 
