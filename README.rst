@@ -62,7 +62,7 @@ Run code generation for C++:
 Current state
 -------------------
  * General:
-  * Check syntax of defaut values (later also min/max), differentiate between float/signed/unsigned)
+  * Check syntax of default values (later also min/max), differentiate between float/signed/unsigned)
   * Check constant fields (not included)
   * Check bitfields (not included)
  * C++: working
@@ -70,4 +70,4 @@ Current state
  * Octave:
   * no checks (add check consistency function; automatically call after read, before write)
   * no tests (just a demo; do we have unittests like in matlab?)
- * Python-construct: not intgerated
+ * Python-construct: not integrated

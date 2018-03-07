@@ -45,8 +45,8 @@ def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
     algos_folder = join(srcgen_folder , "algos")
     if not exists(algos_folder):
         makedirs(algos_folder)
-    #copyfile(this_folder + "/support_cpp_code/target_lang/algo.h", algos_folder + "/attributes.h")
-    #copyfile(this_folder + "/support_cpp_code/target_lang/tools.h", algos_folder + "/tools.h")
+    # copyfile(this_folder + "/support_cpp_code/target_lang/algo.h", algos_folder + "/attributes.h")
+    # copyfile(this_folder + "/support_cpp_code/target_lang/tools.h", algos_folder + "/tools.h")
 
     # Initialize template engine.
     jinja_env = jinja2.Environment(

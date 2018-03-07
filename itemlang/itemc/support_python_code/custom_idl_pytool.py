@@ -1,5 +1,5 @@
-#from textx import model_root
 from textx import get_model
+
 
 def path_to_file_name(struct):
     filename = ""
@@ -17,15 +17,17 @@ def full_path_to_file_name(struct):
 
 def has_import(thetype):
     if thetype.pythontype:
-        return len(thetype.pythontype.fromlib)>0
+        return len(thetype.pythontype.fromlib) > 0
     else:
         return True
+
 
 def get_import(thetype):
     if thetype.pythontype:
         return thetype.pythontype.fromlib
     else:
         return "numpy"
+
 
 def the_package(struct):
     if struct.parent.target_namespace:
@@ -39,28 +41,30 @@ def typename(thetype):
     if type(thetype) is RawType:
         if thetype.pythontype:
             if thetype.pythontype.fromlib:
-                res = thetype.pythontype.fromlib+"."+thetype.pythontype.type
-                #print("typename (rawtype) with lib: {}".format(res))
+                res = thetype.pythontype.fromlib + "." + thetype.pythontype.type
+                # print("typename (rawtype) with lib: {}".format(res))
                 return res
             else:
                 res = thetype.pythontype.type
-                #print("typename (rawtype) w/o lib: {}".format(res))
+                # print("typename (rawtype) w/o lib: {}".format(res))
                 return res
         else:
-            if thetype.genericType=='signed':
+            if thetype.genericType == 'signed':
                 return "numpy.int{}".format(thetype.genericBits.bits)
             elif thetype.genericType == 'unsigned':
                 return "numpy.uint{}".format(thetype.genericBits.bits)
             elif thetype.genericType == 'float':
                 return "numpy.float{}".format(thetype.genericBits.bits)
             else:
-                raise Exception("unexpected, python type specification is required for {} in file {}".format(thetype.name,
-                                                                                                             get_model(
-                                                                                                                 thetype)._tx_filename))
+                raise Exception(
+                    "unexpected, python type specification is required for {} in file {}".format(
+                        thetype.name,
+                        get_model(thetype)._tx_filename))
     else:
-        res = the_package(thetype)+"."+thetype.name
-        #print("typename (struct): {}".format(res))
+        res = the_package(thetype) + "." + thetype.name
+        # print("typename (struct): {}".format(res))
         return res
+
 
 def format(thetype):
     if thetype.pythontype:
@@ -76,9 +80,10 @@ def format(thetype):
             elif thetype.genericBits.bits == 64:
                 return "q"
             else:
-                raise Exception("unexpected, python type specification is required for {} in file {}".format(thetype.name,
-                                                                                                             get_model(
-                                                                                                                 t)._tx_filename))
+                raise Exception(
+                    "unexpected, python type specification is required for {} in file {}".format(
+                        thetype.name,
+                        get_model(thetype)._tx_filename))
         elif thetype.genericType == 'unsigned':
             if thetype.genericBits.bits == 8:
                 return "B"
@@ -89,35 +94,38 @@ def format(thetype):
             elif thetype.genericBits.bits == 64:
                 return "Q"
             else:
-                raise Exception("unexpected, python type specification is required for {} in file {}".format(thetype.name,
-                                                                                                             get_model(
-                                                                                                                 thetype)._tx_filename))
+                raise Exception(
+                    "unexpected, python type specification is required for {} in file {}".format(
+                        thetype.name,
+                        get_model(thetype)._tx_filename))
         elif thetype.genericType == 'float':
             if thetype.genericBits.bits == 32:
                 return "f"
             elif thetype.genericBits.bits == 64:
                 return "d"
             else:
-                raise Exception("unexpected, python type specification is required for {} in file {}".format(thetype.name,
-                                                                                                             get_model(
-                                                                                                                 thetype)._tx_filename))
+                raise Exception(
+                    "unexpected, python type specification is required for {} in file {}".format(
+                        thetype.name,
+                        get_model(thetype)._tx_filename))
         else:
-            raise Exception("unexpected, python type specification is required for {} in file {}".format(thetype.name,
-                                                                                                         get_model(
-                                                                                                             thetype)._tx_filename))
+            raise Exception("unexpected, python type specification is required for {} in file {}".format(
+                thetype.name,
+                get_model(thetype)._tx_filename))
 
 
 def get_meta_info(attribute):
     from itemlang.itemc.metamodel import RawType
     thetype = attribute.type
     if type(thetype) is RawType:
-        return {"model_type_name":thetype.name, "format":format(thetype)}
+        return {"model_type_name": thetype.name, "format": format(thetype)}
     else:
-        return {"model_type_name":thetype.name}
+        return {"model_type_name": thetype.name}
 
-def default_value_init_code(attribute,fixed_read_only=False):
+
+def default_value_init_code(attribute, fixed_read_only=False):
     from itemlang.itemc.metamodel import Struct
-    if attribute.default_value and not(type(attribute.type) is Struct):
+    if attribute.default_value and not (type(attribute.type) is Struct):
         return "{}".format(attribute.default_value)
     else:
         if type(attribute.type) is Struct:

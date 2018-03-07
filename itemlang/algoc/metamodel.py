@@ -4,6 +4,7 @@ from textx import metamodel_from_file
 import textx.scoping.providers as scoping_providers
 import textx.scoping as scoping
 
+
 class CustomAlgoBase(object):
     def __init__(self):
         pass

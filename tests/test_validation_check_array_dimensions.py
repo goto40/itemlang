@@ -6,6 +6,7 @@ from shutil import rmtree
 import os.path
 from pytest import raises
 
+
 def test_validation_check_array_dimensions():
     """
     checks that arrays with more than 1 dimension name the indicies.
@@ -18,7 +19,7 @@ def test_validation_check_array_dimensions():
     #################################
 
     this_folder = dirname(__file__)
-    dest_folder = os.path.join(this_folder,"src-gen")
+    dest_folder = os.path.join(this_folder, "src-gen")
     # cleanup old generated code
     if exists(dest_folder):
         rmtree(dest_folder)
@@ -28,21 +29,21 @@ def test_validation_check_array_dimensions():
     # ---------------------------
     codegen.codegen(srcgen_folder=dest_folder,
                     model_string=
-"""
-// model
-package types {
-    type int as custom {}
-    type UINT16 as custom {}
-    type float as custom {}
-}
-package mypackage1 {
-target_namespace "mypackage1.test"
-    struct Simple {
-        scalar n        : types.UINT16 {default="5"}
-        array  a_ui16   : types.UINT16[n:x][2*n:y]
-    }
-}
-""")
+                    """
+                    // model
+                    package types {
+                        type int as custom {}
+                        type UINT16 as custom {}
+                        type float as custom {}
+                    }
+                    package mypackage1 {
+                    target_namespace "mypackage1.test"
+                        struct Simple {
+                            scalar n        : types.UINT16 {default="5"}
+                            array  a_ui16   : types.UINT16[n:x][2*n:y]
+                        }
+                    }
+                    """)
 
     # ---------------------------
     # error 1
@@ -92,5 +93,5 @@ target_namespace "mypackage1.test"
     # END
     #################################
 
-    #nothing generated: rmtree(dest_folder)
+    # nothing generated: rmtree(dest_folder)
     assert not exists(dest_folder)

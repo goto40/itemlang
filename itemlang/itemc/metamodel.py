@@ -7,6 +7,7 @@ import textx.scoping.tools as scoping_tools
 from functools import reduce
 import itemlang.itemc.object_processors as object_processors
 
+
 class CustomIdlBase(object):
     def __init__(self):
         pass
@@ -42,7 +43,7 @@ class Struct(CustomIdlBase):
         return result
 
     def has_adjustable_array_dimensions(self):
-        return len(self.get_arrays_with_adjustable_dimensions())>0
+        return len(self.get_arrays_with_adjustable_dimensions()) > 0
 
     def get_structs_of_attributes(self):
         result = set()
@@ -81,10 +82,11 @@ class ArrayAttribute(CustomIdlBase):
         self._init_xtextobj(**kwargs)
 
     def has_fixed_size(self):
-        return reduce( lambda x,y: x and y, map(lambda x: x.array_size.has_fixed_size(), self.array_dimensions), True )
+        return reduce(lambda x, y: x and y, map(lambda x: x.array_size.has_fixed_size(), self.array_dimensions), True)
 
     def has_raw_type(self):
         return type(self.type) is RawType
+
 
 class ArrayDimension(CustomIdlBase):
     def __init__(self, **kwargs):
@@ -98,7 +100,7 @@ class ArrayDimension(CustomIdlBase):
             return "index"
 
 
-def get_meta_model(debug=False,**kwargs):
+def get_meta_model(debug=False, **kwargs):
     from itemlang.itemc.metamodel_formula import Sum, Mul, Dif, Div, Val, ScalarRef
 
     grammar_file_name = '../grammar/CustomIDL.tx'
@@ -119,8 +121,9 @@ def get_meta_model(debug=False,**kwargs):
     }
 
     this_folder = dirname(abspath(__file__))
-    mm = metamodel_from_file( os.path.join(this_folder,grammar_file_name), debug=debug,
-                              classes=[Sum,Mul,Dif,Div,Val,ScalarRef,RawType,Struct,ArrayAttribute,ScalarAttribute,ArrayDimension])
+    mm = metamodel_from_file(os.path.join(this_folder, grammar_file_name), debug=debug,
+                             classes=[Sum, Mul, Dif, Div, Val, ScalarRef, RawType, Struct, ArrayAttribute,
+                                      ScalarAttribute, ArrayDimension])
 
     mm.register_scope_providers(my_providers)
     mm.register_obj_processors(my_object_processors)
