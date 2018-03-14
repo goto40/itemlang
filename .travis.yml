@@ -14,7 +14,7 @@ before_install:
     # stuff for compiling cpp
     - sudo apt-get install -qq catch
     #- sudo apt-get install -qq libmsgsl-dev
-    - git clone --depth=1 --branch=master https://github.com/goto40/textX.git
+    - git clone --depth=1 --branch=master https://github.com/igordejanovic/textX
     - cd textX && python setup.py install
     - cd ../itemlang
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
