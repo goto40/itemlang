@@ -1,4 +1,4 @@
-from itemlang.itemc.metamodel import CustomIdlBase
+from itemlang.metamodel import CustomIdlBase
 from functools import reduce
 
 

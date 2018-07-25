@@ -1,6 +1,5 @@
 from os.path import expanduser
-from itemlang.itemc.codegen import codegen as item_codegen
-from itemlang.algoc.codegen import codegen as algo_codegen
+from itemlang.codegen import codegen as item_codegen
 
 
 def itemc():

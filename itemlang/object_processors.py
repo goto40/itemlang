@@ -32,7 +32,7 @@ def check_array_attribute(array_attribute):
     :return: None
     throws on error
     """
-    from itemlang.itemc.metamodel_formula import ScalarRef
+    from itemlang.metamodel_formula import ScalarRef
     dependencies = map(lambda x: x.ref0,
                        reduce(lambda l1, l2: l1 + l2,
                               map(lambda node: get_children_of_type(ScalarRef, node), array_attribute.array_dimensions),
@@ -59,7 +59,7 @@ class CheckRawTypes(object):
             self.options = {}
 
     def __call__(self, struct):
-        from itemlang.itemc.metamodel import RawType
+        from itemlang.metamodel import RawType
 
         def check_raw_type_is_defined_for_language(rawtype):
             if "generate_cpp" in self.options.keys() and self.options["generate_cpp"]:

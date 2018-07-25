@@ -12,7 +12,7 @@ def test_validation_check_array_attribute():
     checks that array length depends not on attributes defined after the array in the struct.
     """
 
-    import itemlang.itemc.codegen as codegen
+    import itemlang.codegen as codegen
 
     #################################
     # Model definition and Code creation

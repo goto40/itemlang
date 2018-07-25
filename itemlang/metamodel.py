@@ -5,7 +5,7 @@ import os
 import textx.scoping.providers as scoping_providers
 import textx.scoping.tools as scoping_tools
 from functools import reduce
-import itemlang.itemc.object_processors as object_processors
+import itemlang.object_processors as object_processors
 
 
 class CustomIdlBase(object):
@@ -101,9 +101,9 @@ class ArrayDimension(CustomIdlBase):
 
 
 def get_meta_model(debug=False, **kwargs):
-    from itemlang.itemc.metamodel_formula import Sum, Mul, Dif, Div, Val, ScalarRef
+    from itemlang.metamodel_formula import Sum, Mul, Dif, Div, Val, ScalarRef
 
-    grammar_file_name = '../grammar/CustomIDL.tx'
+    grammar_file_name = 'grammar/CustomIDL.tx'
 
     my_providers = {
         "*.*": scoping_providers.FQNImportURI(),

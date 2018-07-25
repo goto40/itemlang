@@ -12,7 +12,7 @@ def test_validation_check_scalar_ref():
     checks that attributes influencing array sizes need a default value
     """
 
-    import itemlang.itemc.codegen as codegen
+    import itemlang.codegen as codegen
 
     #################################
     # Model definition and Code creation

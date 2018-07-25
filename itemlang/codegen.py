@@ -4,7 +4,7 @@ template engine (http://jinja.pocoo.org/docs/dev/)
 """
 
 from __future__ import unicode_literals
-import itemlang.itemc.metamodel as custom_idl_metamodel
+import itemlang.metamodel as custom_idl_metamodel
 from os import mkdir, makedirs
 from shutil import copyfile
 from os.path import dirname, join, exists, abspath
@@ -48,7 +48,7 @@ def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False,
 
 
 def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
-    import itemlang.itemc.support_cpp_code.custom_idl_cpptool as cpptool
+    import itemlang.support_cpp_code.custom_idl_cpptool as cpptool
     # attributes helper
     attributes_folder = join(srcgen_folder, "attributes")
     if not exists(attributes_folder):
@@ -75,7 +75,7 @@ def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
 
 
 def _generate_python_code(idl_model, srcgen_folder, this_folder):
-    import itemlang.itemc.support_python_code.custom_idl_pytool as pytool
+    import itemlang.support_python_code.custom_idl_pytool as pytool
     # attributes helper
     attributes_folder = join(srcgen_folder, "attributes")
     if not exists(attributes_folder):
@@ -114,7 +114,7 @@ def _generate_python_code(idl_model, srcgen_folder, this_folder):
 
 
 def _generate_octave_code(idl_model, srcgen_folder, this_folder):
-    import itemlang.itemc.support_octave_code.custom_idl_octtool as octtool
+    import itemlang.support_octave_code.custom_idl_octtool as octtool
     # Initialize template engine.
     jinja_env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(this_folder + "/support_octave_code"),

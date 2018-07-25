@@ -12,7 +12,7 @@ def test_validation_CheckRawTypes():
     checks that addon info for used types for specific languages are defined.
     """
 
-    import itemlang.itemc.codegen as codegen
+    import itemlang.codegen as codegen
 
     #################################
     # Model definition and Code creation

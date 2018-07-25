@@ -12,7 +12,7 @@ def test_validation_check_array_dimensions():
     checks that arrays with more than 1 dimension name the indicies.
     """
 
-    import itemlang.itemc.codegen as codegen
+    import itemlang.codegen as codegen
 
     #################################
     # Model definition and Code creation
