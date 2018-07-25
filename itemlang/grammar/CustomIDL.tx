@@ -33,7 +33,6 @@ RawType:
     "type" name=ID 'as' genericType=GenericType genericBits=GenericBits? ("{"
         (cpptype = CppType)?
         (pythontype = PythonType)?
-        (pythonconstructtype = PythonConstructType)?
     "}")?
 ;
 GenericBits: 'with' bits=INT 'bits';
@@ -44,9 +43,6 @@ CppType:
 ;
 PythonType:
     "python" ":" type=STRING ("from" fromlib=STRING)? "with" "format" format=STRING
-;
-PythonConstructType:
-    "python-construct" ":" type=STRING?
 ;
 
 // ---------------------------------------------------------------------

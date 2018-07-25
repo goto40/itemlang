@@ -18,7 +18,6 @@ def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False,
     mm = custom_idl_metamodel.get_meta_model(
         generate_cpp=generate_cpp,
         generate_python=generate_python,
-        generate_python_construct=generate_python_construct,
         generate_octave=generate_octave
     )
 
@@ -44,8 +43,6 @@ def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False,
         _generate_cpp_code(idl_model, srcgen_folder, this_folder)
     if generate_python:
         _generate_python_code(idl_model, srcgen_folder, this_folder)
-    if generate_python_construct:
-        _generate_python_construct_code(idl_model, srcgen_folder, this_folder)
     if generate_octave:
         _generate_octave_code(idl_model, srcgen_folder, this_folder)
 
@@ -113,35 +110,6 @@ def _generate_python_code(idl_model, srcgen_folder, this_folder):
                        "{}.py".format(struct.name)), 'w') as f:
             f.write(template.render(struct=struct,
                                     pytool=pytool
-                                    ))
-
-
-def _generate_python_construct_code(idl_model, srcgen_folder, this_folder):
-    import itemlang.itemc.support_python_construct_code.custom_idl_pyctool as pyctool
-    jinja_env = jinja2.Environment(
-        loader=jinja2.FileSystemLoader(this_folder + "/support_python_construct_code"),
-        trim_blocks=True,
-        lstrip_blocks=True)
-    # Load Java template
-    template = jinja_env.get_template('python-construct.template')
-    for struct in get_children_of_type("Struct", idl_model):
-        # For each entity generate java file
-        struct_folder = join(srcgen_folder, pyctool.path_to_file_name(struct))
-        if not exists(struct_folder):
-            makedirs(struct_folder)
-
-        if struct.parent.target_namespace:
-            parts = struct.parent.target_namespace.name.split(".")
-            dir = srcgen_folder
-            for part in parts:
-                dir = join(dir, part)
-                init_filename = join(dir, "__init__.py")
-                with open(init_filename, 'w') as f:
-                    f.write("")
-
-        with open(join(srcgen_folder, pyctool.full_path_to_file_name(struct)), 'w') as f:
-            f.write(template.render(struct=struct,
-                                    pyctool=pyctool
                                     ))
 
 
