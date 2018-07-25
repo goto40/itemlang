@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.0)
 project(ItemLangCppTest)
 
 set(TSTNAME Tester.exe)
-set(ALGOSLIB Algos.lib)
 
 # set compiler flags
 set(CMAKE_CXX_STANDARD 14)
@@ -27,18 +26,11 @@ include_directories(src)
 include_directories(${SRCGEN})
 
 # -------------------------------------------------------------
-#define lib
-set(ALGOSSRC src)
-file(GLOB_RECURSE ALGOSFILES "${ALGOSSRC}/*.cpp")
-add_library(${ALGOSLIB} STATIC ${ALGOSFILES})
-add_dependencies(${ALGOSLIB} item_code)
-
-# -------------------------------------------------------------
 # define tester
 set(TSTSRC tests)
 file(GLOB_RECURSE TSTFILES "${TSTSRC}/*.cpp")
 add_executable(${TSTNAME} ${TSTFILES})
-target_link_libraries(${TSTNAME} ${ALGOSLIB})
+target_link_libraries(${TSTNAME})
 ###set_target_properties(${TSTNAME} PROPERTIES COMPILE_FLAGS "-coverage -g -O0") # gcc
 add_dependencies(${TSTNAME} item_code)
 
