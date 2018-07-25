@@ -13,8 +13,6 @@ def itemc():
                         action='store_true', help='generate C++ code')
     parser.add_argument('--generate-python', dest='generate_python', default=False,
                         action='store_true', help='generate python code')
-    parser.add_argument('--generate-python-construct', dest='generate_python_construct', default=False,
-                        action='store_true', help='generate python code (construct based)')
     parser.add_argument('--generate-octave', dest='generate_octave', default=False,
                         action='store_true', help='generate octave code')
 
@@ -23,7 +21,6 @@ def itemc():
         item_codegen(model_file=model_file, srcgen_folder=expanduser(args.srcgen),
                      generate_cpp=args.generate_cpp,
                      generate_python=args.generate_python,
-                     generate_python_construct=args.generate_python_construct,
                      generate_octave=args.generate_octave
                      )
 

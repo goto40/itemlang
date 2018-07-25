@@ -13,7 +13,7 @@ from textx import get_children_of_type
 
 
 def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False, generate_cpp=False,
-            generate_python=False, generate_python_construct=False, generate_octave=False):
+            generate_python=False, generate_octave=False):
     this_folder = dirname(abspath(__file__))
     mm = custom_idl_metamodel.get_meta_model(
         generate_cpp=generate_cpp,

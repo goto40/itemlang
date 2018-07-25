@@ -72,12 +72,6 @@ class CheckRawTypes(object):
                     raise Exception("python type is required to generate python code for {} in {}".format(
                         rawtype.name,
                         get_model(rawtype)._tx_filename))
-            if "generate_python_construct" in self.options.keys() and self.options["generate_python_construct"]:
-                if not rawtype.pythonconstructtype:
-                    raise Exception(
-                        "python-construct type is required to generate python code for {} in {}".format(
-                            rawtype.name,
-                            get_model(rawtype)._tx_filename))
 
         for t in set(filter(lambda x: isinstance(x, RawType), map(lambda x: x.type, struct.attributes))):
             check_raw_type_is_defined_for_language(t)
