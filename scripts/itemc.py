@@ -1,3 +1,3 @@
 if __name__ == '__main__':
-    from itemlang.commands.console import itemc
+    from itemlang.console import itemc
     itemc()
