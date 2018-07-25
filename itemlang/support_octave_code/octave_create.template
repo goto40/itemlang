@@ -1,0 +1,47 @@
+function data = {{ octtool.func_name(struct,"create") }}( ...
+    {% for attribute in struct.get_attributes_which_affects_size() %}
+        p_{{ attribute.name }} {{ "," if not loop.last }} ...
+    {% endfor %}
+    )
+
+        data = struct();
+
+    {% for attribute in struct.attributes %}
+        {% if "ScalarAttribute" in attribute.__class__.__name__ %}
+            {% if attribute.affects_size() %}
+                {% if not attribute.has_raw_type() %}
+        {{ octtool.func_name(attribute.type,"check") }}(p_{{ attribute.name }})
+                {% endif %}
+        data.{{ attribute.name }} = {{octtool.rawtype(attribute.type)}}(p_{{ attribute.name }});
+            {% else %}
+        data.{{ attribute.name }} = {{octtool.rawtype(attribute.type)}}(0); % TODO: use default values if present
+            {% endif %}
+        {% endif %}
+        {% if "ArrayAttribute" in attribute.__class__.__name__ %}
+            {% if attribute.has_raw_type() %}
+               data.{{ attribute.name }} = zeros( ...
+                    {% if attribute.array_dimensions|length ==1 %}
+                    1,
+                    {% endif %}
+                    {% for s in attribute.array_dimensions %}
+                    {{ s.array_size.render_formula(separator=".",postfix="",prefix="data.")}}, ...
+                    {% endfor %}
+                    "{{octtool.rawtype(attribute.type)}}"...
+                );
+            {% else %}
+               data.{{ attribute.name }} = cell( ...
+                    {% if attribute.array_dimensions|length ==1 %}
+                    1,
+                    {% endif %}
+                    {% for s in attribute.array_dimensions %}
+                    {{ s.array_size.render_formula(separator=".",postfix="",prefix="data.")}} {{ "," if not loop.last }}...
+                    {% endfor %}
+                );
+                for k=1:numel(data.{{ attribute.name }})
+                    data.{{ attribute.name }}{k}={{ octtool.func_name(attribute.type, "create") }}();
+                end
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+end

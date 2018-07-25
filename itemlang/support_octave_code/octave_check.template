@@ -1,0 +1,68 @@
+function {{ octtool.func_name(struct,"check") }}( data, parent_name )
+
+    if nargin<2
+        parent_name="";
+    end
+
+    if not(isa(data,"struct"))
+        error(sprintf("unexpected data to be a struct %s",parent_name));
+    end
+    if numel(fieldnames(data)) != {{ struct.attributes |length }}
+        error(sprintf("unexpected number of fields %s",parent_name));
+    end
+
+    {% for attribute in struct.attributes %}
+        {% if "ScalarAttribute" in attribute.__class__.__name__ %}
+
+            if numel(data.{{ attribute.name }})!=1
+                error(sprintf("unexpected: %s.{{ attribute.name }} needs to be a {{octtool.rawtype(attribute.type)}}",parent_name));
+            end
+            {% if attribute.has_raw_type() %}
+                if not(isa(data.{{ attribute.name }}, "{{octtool.rawtype(attribute.type)}}"))
+                    error(sprintf("unexpected: %s.{{ attribute.name }} needs to be a {{octtool.rawtype(attribute.type)}}",parent_name));
+                end
+            {% else %}
+                if not(isa(data.{{ attribute.name }}, "struct"))
+                    error(sprintf("unexpected: %s.{{ attribute.name }} needs to be a struct {{octtool.rawtype(attribute.type)}}",parent_name));
+                end
+                next_name = sprintf("%s.{{ attribute.name }}",parent_name);
+                {{ octtool.func_name(attribute.type, "check") }}(data.{{ attribute.name }}, next_name);
+            {% endif %}
+
+        {% endif %}
+        {% if "ArrayAttribute" in attribute.__class__.__name__ %}
+
+            checksize = [ ...
+                {% if attribute.array_dimensions|length ==1 %}
+                1 ...
+                {% endif %}
+                {% for s in attribute.array_dimensions %}
+                {{ s.array_size.render_formula(separator=".",postfix="",prefix="data.")}} {{ " " if not loop.last }} ...
+                {% endfor %}
+                ];
+            cursize = size(data.{{ attribute.name }});
+            if numel(cursize) != numel(checksize)
+                error(sprintf("unexpected: %s.{{ attribute.name }} has wrong dimension",parent_name));
+            end
+            if any(cursize != checksize)
+                error(sprintf("unexpected: %s.{{ attribute.name }} has wrong size, %s!=%s",parent_name,mat2str(cursize),mat2str(checksize)));
+            end
+
+            {% if attribute.has_raw_type() %}
+                if not(isa(data.{{ attribute.name }}, "{{octtool.rawtype(attribute.type)}}"))
+                    error(sprintf("unexpected: %s.{{ attribute.name }} needs to be a {{octtool.rawtype(attribute.type)}}",parent_name));
+                end
+            {% else %}
+                if not(iscell(data.{{ attribute.name }}))
+                    error(sprintf("unexpected: %s.{{ attribute.name }} needs to be a cell array with {{octtool.rawtype(attribute.type)}}",parent_name));
+                end
+                next_name = sprintf("%s.{{ attribute.name }}",parent_name);
+                for k=1:numel(data.{{ attribute.name }})
+                    {{ octtool.func_name(attribute.type, "check") }}(data.{{ attribute.name }}{k}, next_name);;
+                end
+            {% endif %}
+
+        {% endif %}
+    {% endfor %}
+
+end
