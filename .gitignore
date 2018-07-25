@@ -102,4 +102,6 @@ ENV/
 
 # custon
 **/src-gen
+**/src-cpp
+**/src-python
 *.bin
