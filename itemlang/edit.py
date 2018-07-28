@@ -70,6 +70,7 @@ def parse_tree_to_objgraph(parser, parse_tree, file_name=None,
 
     def process_node(node):
         if isinstance(node, Terminal):
+            print("process_node TERMINAL: {} : {}".format(node, node.rule_name))
             from arpeggio import RegExMatch
             if metamodel.use_regexp_group and \
                     isinstance(node.rule, RegExMatch):
