@@ -1,5 +1,6 @@
 """
 simple editor for the model
+WORK IN PROGRESS: 1%
 """
 
 from __future__ import unicode_literals
