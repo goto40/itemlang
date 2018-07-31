@@ -98,12 +98,15 @@ def edit(model_file):
         print("Terminal {}:{}:{}-{}.{}-{}.{}.".format(r,r.rule_name,r.name,
                                                       *r2pos1(r), *r2pos2(r)))
         tag='keyword'
-        # TODO analyze pl stack --> find outer element with same pos
+        # TODO analyze pl stack --> find outer element with same posK
         if p is not None and p.name.startswith('__asgn'):
             if (p.rule._attr_name=='name'):
                 tag = 'name_value'
             else:
                 tag = 'value'
+            # how to identify links?
+            # maybe I need to decorate the parse tree with links to the model?
+            # or the meta model?
         T.tag_add(tag,
                   '{}.{}'.format(*r2pos1(r)),
                   '{}.{}'.format(*r2pos2(r)))
