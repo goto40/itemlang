@@ -57,10 +57,9 @@ def edit(model_file):
     r2pos2 = lambda o : model._tx_parser.pos_to_linecol(o.position_end-1)
 
     for r ,p, pl, islink in all_terminals_and_links(pt):
-        #print("Terminal {}:{}:{}-{}.{}-{}.{}.".format(r,r.rule_name,r.name,
-        #                                              *r2pos1(r), *r2pos2(r)))
+        #print("Terminal/Link({}) {}:{}:{}-{}.{}-{}.{}.".format(islink,r,
+        #                      r.rule_name,r.name,*r2pos1(r), *r2pos2(r)))
         tag='keyword'
-        # TODO analyze pl stack --> find outer element with same posK
         if islink:
             tag = 'link'
         elif p is not None and p.name.startswith('__asgn'):
