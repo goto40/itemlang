@@ -117,6 +117,5 @@ class Editor:
 
         self.analyze_and_set_tags(model_str, model_filename)
 
-
         # run GUI
         tk.mainloop()
