@@ -22,7 +22,7 @@ def itemc():
     args = parser.parse_args()
     for model_file in args.model_files:
         if args.edit:
-            edit(model_file=model_file)
+            edit(model_filename=model_file)
         else:
             codegen(model_file=model_file,
                          srcgen_folder=expanduser(args.srcgen),
