@@ -6,8 +6,12 @@ WORK IN PROGRESS: 1%
 from __future__ import unicode_literals
 import itemlang.metamodel as custom_idl_metamodel
 import codecs
-import tkinter as tk
-from arpeggio import Parser, Sequence, NoMatch, EOF, Terminal, NonTerminal
+import six
+if six.PY2:
+    import Tkinter as tk
+else:
+    import tkinter as tk
+from arpeggio import Terminal
 
 
 def all_terminals_and_links(pt, parent=None, parent_list=None):
