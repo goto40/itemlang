@@ -103,3 +103,4 @@ ENV/
 # custon
 **/src-gen
 *.bin
+.idea
