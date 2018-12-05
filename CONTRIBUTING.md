@@ -3,7 +3,8 @@
 ## Get Started!
 
         cd itemlang/
-        virtualenv venv
+        virtualenv -p $(which python3) venv
+        # or: virtualenv venv
         source venv/bin/activate
         pip install -r requirements_dev.txt
         pip install -e .
@@ -15,4 +16,5 @@
         
 ## Run tests
 
-TODO
+	py.test tests
+
