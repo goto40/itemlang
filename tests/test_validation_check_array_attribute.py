@@ -9,7 +9,8 @@ from pytest import raises
 
 def test_validation_check_array_attribute():
     """
-    checks that array length depends not on attributes defined after the array in the struct.
+    checks that array length depends not on attributes defined after the
+    array in the struct.
     """
 
     import itemlang.codegen as codegen
@@ -28,8 +29,7 @@ def test_validation_check_array_attribute():
     # no error
     # ---------------------------
     codegen.codegen(srcgen_folder=dest_folder,
-                    model_string=
-                    """
+                    model_string="""
                     // model
                     package types {
                         type int as custom {}
@@ -58,29 +58,28 @@ def test_validation_check_array_attribute():
     # ---------------------------
     with raises(Exception, match=r'depends on .* not defined before it'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
-                        // model
-                        package types {
-                            type int as custom {}
-                            type UINT16 as custom {}
-                            type float as custom {}
-                        }
-                        package mypackage1 {
-                        target_namespace "mypackage1.test"
-                        struct Header {
-                            scalar proofword : types.int
-                            scalar n : types.int { default = "0x16" }
-                            scalar k : types.int
-                            array info : types.float[10]
-                        }
-                        struct Simple {
-                            scalar h        : Header
-                            scalar x        : types.UINT16
-                            array  a_ui16   : types.UINT16[n]
-                            scalar n        : types.UINT16 {default="5"} // error
-                        }
-                        }
+                        model_string="""
+                // model
+                package types {
+                    type int as custom {}
+                    type UINT16 as custom {}
+                    type float as custom {}
+                }
+                package mypackage1 {
+                    target_namespace "mypackage1.test"
+                    struct Header {
+                        scalar proofword : types.int
+                        scalar n : types.int { default = "0x16" }
+                        scalar k : types.int
+                        array info : types.float[10]
+                    }
+                    struct Simple {
+                        scalar h        : Header
+                        scalar x        : types.UINT16
+                        array  a_ui16   : types.UINT16[n]
+                        scalar n        : types.UINT16 {default="5"} // error
+                    }
+                }
                         """)
 
     # ---------------------------
@@ -88,8 +87,7 @@ def test_validation_check_array_attribute():
     # ---------------------------
     with raises(Exception, match=r'depends on .* not defined before it'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
+                        model_string="""
                         // model
                         package types {
                             type int as custom {}
@@ -97,19 +95,19 @@ def test_validation_check_array_attribute():
                             type float as custom {}
                         }
                         package mypackage1 {
-                        target_namespace "mypackage1.test"
-                        struct Header {
-                            scalar proofword : types.int
-                            scalar n : types.int { default = "0x16" }
-                            scalar k : types.int
-                            array info : types.float[10]
-                        }
-                        struct Simple {
-                            scalar n        : types.UINT16 {default="5"} 
-                            scalar x        : types.UINT16
-                            array  a_ui16   : types.UINT16[n:x][h.n:y]
-                            scalar h        : Header
-                        }
+                            target_namespace "mypackage1.test"
+                            struct Header {
+                                scalar proofword : types.int
+                                scalar n : types.int { default = "0x16" }
+                                scalar k : types.int
+                                array info : types.float[10]
+                            }
+                            struct Simple {
+                                scalar n        : types.UINT16 {default="5"}
+                                scalar x        : types.UINT16
+                                array  a_ui16   : types.UINT16[n:x][h.n:y]
+                                scalar h        : Header
+                            }
                         }
                         """)
 

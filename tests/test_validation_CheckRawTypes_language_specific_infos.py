@@ -29,8 +29,7 @@ def test_validation_CheckRawTypes():
     # ---------------------------
     codegen.codegen(srcgen_folder=dest_folder,
                     generate_cpp=True,
-                    model_string=
-                    """
+                    model_string="""
                     // model
                     package types {
                         type int as custom { C++: "int"}
@@ -48,11 +47,11 @@ def test_validation_CheckRawTypes():
     # ---------------------------
     # error 1
     # ---------------------------
-    with raises(Exception, match=r'C\+\+ type is required to generate C\+\+ code for float'):
+    with raises(Exception, match=r'C\+\+ type is required to generate ' +
+                                 r'C\+\+ code for float'):
         codegen.codegen(srcgen_folder=dest_folder,
                         generate_cpp=True,
-                        model_string=
-                        """
+                        model_string="""
                         // model
                         package types {
                             type int as custom { C++: "int"}

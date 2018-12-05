@@ -10,13 +10,15 @@ def pprint(struct):
 
         def visitRawTypeScalar(self, struct, item, meta):
             self.return_text += " " * self.identation
-            self.return_text += "{} = {}\n".format(item, struct.__getattr__(item))
+            self.return_text += "{} = {}\n".format(
+                item, struct.__getattr__(item))
 
         def visitStructuredScalar(self, struct, item, meta):
             self.return_text += " " * self.identation
             self.return_text += "{} = {".format(item, meta)
 
-            inner_visitor = Visitor(self.identation + 2, self.max_array_elems_per_line)
+            inner_visitor = Visitor(
+                self.identation + 2, self.max_array_elems_per_line)
             struct.__getattr__(item).accept(inner_visitor)
             self.return_text += inner_visitor.return_text
 
@@ -53,7 +55,8 @@ def pprint(struct):
             a = struct.__getattr__(item)
             for v in a.flat:
                 self.return_text += " " * (self.identation + 2) + "{\n"
-                inner_visitor = Visitor(self.identation + 4, self.max_array_elems_per_line)
+                inner_visitor = Visitor(self.identation + 4,
+                                        self.max_array_elems_per_line)
                 v.accept(inner_visitor)
                 self.return_text += inner_visitor.return_text
                 self.return_text += " " * (self.identation + 2) + "}\n"
@@ -61,7 +64,8 @@ def pprint(struct):
 
     inner_visitor = Visitor(2)
     struct.accept(inner_visitor)
-    return "{} {{\n{}}}\n".format(type(struct).__name__, inner_visitor.return_text)
+    return "{} {{\n{}}}\n".format(
+        type(struct).__name__, inner_visitor.return_text)
 
 
 def bin_write(struct, myfile):
@@ -70,7 +74,8 @@ def bin_write(struct, myfile):
             self.f = thefile
 
         def visitRawTypeScalar(self, struct, item, meta):
-            d = structlib.pack("={}".format(meta['format']), struct.__getattr__(item))
+            d = structlib.pack("={}".format(
+                meta['format']), struct.__getattr__(item))
             self.f.write(d)
 
         def visitStructuredScalar(self, struct, item, meta):
@@ -78,8 +83,9 @@ def bin_write(struct, myfile):
             struct.__getattr__(item).accept(inner_visitor)
 
         def visitRawTypeArray(self, struct, item, meta):
-            d = structlib.pack("={}{}".format(struct.__getattr__(item).size, meta['format']),
-                               *(struct.__getattr__(item).flatten()))
+            d = structlib.pack("={}{}".format(
+                struct.__getattr__(item).size, meta['format']),
+                *(struct.__getattr__(item).flatten()))
             self.f.write(d)
 
         def visitStructuredArray(self, struct, item, meta):
@@ -102,14 +108,16 @@ def bin_read(struct, myfile):
             n = structlib.calcsize(fmt)
             d = self.f.read(n)
             assert len(d) == n
-            struct.__setattr__(item, struct.__getattr__(item).__class__(structlib.unpack(fmt, d)[0]))
+            struct.__setattr__(item, struct.__getattr__(item).__class__(
+                structlib.unpack(fmt, d)[0]))
 
         def visitStructuredScalar(self, struct, item, meta):
             inner_visitor = Visitor(self.f)
             struct.__getattr__(item).accept_and_init(inner_visitor)
 
         def visitRawTypeArray(self, struct, item, meta):
-            fmt = "={}{}".format(struct.__getattr__(item).size, meta['format'])
+            fmt = "={}{}".format(
+                struct.__getattr__(item).size, meta['format'])
             n = structlib.calcsize(fmt)
             d = self.f.read(n)
             assert len(d) == n

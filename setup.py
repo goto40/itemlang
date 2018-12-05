@@ -12,7 +12,8 @@ AUTHOR = 'Pierre Bayerl'
 AUTHOR_EMAIL = 'pierre DOT bayerl AT googlemail DOT com'
 LICENSE = 'MIT'
 URL = 'https://github.com/goto40/itemlang'
-DOWNLOAD_URL = 'https://github.com/goto40/itemlang/archive/v{0}.tar.gz'.format(VERSION)
+DOWNLOAD_URL = \
+    'https://github.com/goto40/itemlang/archive/v{0}.tar.gz'.format(VERSION)
 README = codecs.open(os.path.join(os.path.dirname(__file__), 'README.rst'),
                      'r', encoding='utf-8').read()
 

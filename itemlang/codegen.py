@@ -12,7 +12,8 @@ import jinja2
 from textx import get_children_of_type
 
 
-def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False, generate_cpp=False,
+def codegen(model_file=None, srcgen_folder=None, model_string=None,
+            debug=False, generate_cpp=False,
             generate_python=False, generate_octave=False):
     this_folder = dirname(abspath(__file__))
     mm = custom_idl_metamodel.get_meta_model(
@@ -24,9 +25,11 @@ def codegen(model_file=None, srcgen_folder=None, model_string=None, debug=False,
     # parse and validate
 
     if model_file and model_string:
-        raise Exception("illegal call with model string AND model file specified.")
+        raise Exception(
+            "illegal call with model string AND model file specified.")
     elif not model_file and not model_string:
-        raise Exception("illegal call with no model string or model file specified.")
+        raise Exception(
+            "illegal call with no model string or model file specified.")
     elif model_file:
         idl_model = mm.model_from_file(model_file)
     else:  # model_string
@@ -53,8 +56,10 @@ def _generate_cpp_code(idl_model, srcgen_folder, this_folder):
     attributes_folder = join(srcgen_folder, "attributes")
     if not exists(attributes_folder):
         makedirs(attributes_folder)
-    copyfile(this_folder + "/support_cpp_code/target_lang/attributes.h", attributes_folder + "/attributes.h")
-    copyfile(this_folder + "/support_cpp_code/target_lang/tools.h", attributes_folder + "/tools.h")
+    copyfile(this_folder + "/support_cpp_code/target_lang/attributes.h",
+             attributes_folder + "/attributes.h")
+    copyfile(this_folder + "/support_cpp_code/target_lang/tools.h",
+             attributes_folder + "/tools.h")
     # Initialize template engine.
     jinja_env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(this_folder + "/support_cpp_code"),
@@ -80,8 +85,10 @@ def _generate_python_code(idl_model, srcgen_folder, this_folder):
     attributes_folder = join(srcgen_folder, "attributes")
     if not exists(attributes_folder):
         makedirs(attributes_folder)
-    copyfile(this_folder + "/support_python_code/target_lang/attributes.py", attributes_folder + "/attributes.py")
-    copyfile(this_folder + "/support_python_code/target_lang/tools.py", attributes_folder + "/tools.py")
+    copyfile(this_folder + "/support_python_code/target_lang/attributes.py",
+             attributes_folder + "/attributes.py")
+    copyfile(this_folder + "/support_python_code/target_lang/tools.py",
+             attributes_folder + "/tools.py")
     with open(attributes_folder + "/__init__.py", 'w') as f:
         f.write("")
     # Initialize template engine.
@@ -122,12 +129,15 @@ def _generate_octave_code(idl_model, srcgen_folder, this_folder):
         lstrip_blocks=True)
     # Load Java template
     for func_name in ["read", "write", "create", "check"]:
-        template = jinja_env.get_template('octave_{}.template'.format(func_name))
+        template = jinja_env.get_template(
+            'octave_{}.template'.format(func_name))
         for struct in get_children_of_type("Struct", idl_model):
-            struct_folder = join(srcgen_folder, octtool.path_to_file_name(struct))
+            struct_folder = join(
+                srcgen_folder, octtool.path_to_file_name(struct))
             if not exists(struct_folder):
                 makedirs(struct_folder)
-            with open(join(srcgen_folder, octtool.full_path_to_file_name(struct, func_name)), 'w') as f:
+            with open(join(srcgen_folder, octtool.full_path_to_file_name(
+                    struct, func_name)), 'w') as f:
                 f.write(template.render(struct=struct,
                                         octtool=octtool
                                         ))

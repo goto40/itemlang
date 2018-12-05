@@ -41,7 +41,8 @@ def typename(thetype):
     if type(thetype) is RawType:
         if thetype.pythontype:
             if thetype.pythontype.fromlib:
-                res = thetype.pythontype.fromlib + "." + thetype.pythontype.type
+                res = thetype.pythontype.fromlib + "." + \
+                      thetype.pythontype.type
                 # print("typename (rawtype) with lib: {}".format(res))
                 return res
             else:
@@ -57,7 +58,8 @@ def typename(thetype):
                 return "numpy.float{}".format(thetype.genericBits.bits)
             else:
                 raise Exception(
-                    "unexpected, python type specification is required for {} in file {}".format(
+                    "unexpected, python type specification is " +
+                    "required for {} in file {}".format(
                         thetype.name,
                         get_model(thetype)._tx_filename))
     else:
@@ -80,10 +82,10 @@ def format(thetype):
             elif thetype.genericBits.bits == 64:
                 return "q"
             else:
-                raise Exception(
-                    "unexpected, python type specification is required for {} in file {}".format(
-                        thetype.name,
-                        get_model(thetype)._tx_filename))
+                raise Exception("unexpected, python type specification " +
+                                "is required for {} in file {}".format(
+                                    thetype.name,
+                                    get_model(thetype)._tx_filename))
         elif thetype.genericType == 'unsigned':
             if thetype.genericBits.bits == 8:
                 return "B"
@@ -94,24 +96,25 @@ def format(thetype):
             elif thetype.genericBits.bits == 64:
                 return "Q"
             else:
-                raise Exception(
-                    "unexpected, python type specification is required for {} in file {}".format(
-                        thetype.name,
-                        get_model(thetype)._tx_filename))
+                raise Exception("unexpected, python type specification " +
+                                "is required for {} in file {}".format(
+                                    thetype.name,
+                                    get_model(thetype)._tx_filename))
         elif thetype.genericType == 'float':
             if thetype.genericBits.bits == 32:
                 return "f"
             elif thetype.genericBits.bits == 64:
                 return "d"
             else:
-                raise Exception(
-                    "unexpected, python type specification is required for {} in file {}".format(
-                        thetype.name,
-                        get_model(thetype)._tx_filename))
+                raise Exception("unexpected, python type specification " +
+                                "is required for {} in file {}".format(
+                                    thetype.name,
+                                    get_model(thetype)._tx_filename))
         else:
-            raise Exception("unexpected, python type specification is required for {} in file {}".format(
-                thetype.name,
-                get_model(thetype)._tx_filename))
+            raise Exception("unexpected, python type specification is " +
+                            "required for {} in file {}".format(
+                                thetype.name,
+                                get_model(thetype)._tx_filename))
 
 
 def get_meta_info(attribute):

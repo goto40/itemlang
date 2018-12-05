@@ -28,8 +28,7 @@ def test_validation_check_scalar_ref():
     # no error
     # ---------------------------
     codegen.codegen(srcgen_folder=dest_folder,
-                    model_string=
-                    """
+                    model_string="""
                     // model
                     package types {
                         type int    as signed   with 32 bits
@@ -51,8 +50,7 @@ def test_validation_check_scalar_ref():
     # ---------------------------
     with raises(Exception, match=r'n.*needs to have a default value'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
+                        model_string="""
                         // model
                         package types {
                             type int    as signed   with 32 bits
@@ -62,7 +60,7 @@ def test_validation_check_scalar_ref():
                         package mypackage1 {
                         target_namespace "mypackage1.test"
                             struct Simple {
-                                scalar n        : types.UINT16 
+                                scalar n        : types.UINT16
                                 scalar x        : types.UINT16
                                 array  a_ui16   : types.UINT16[n]
                             }

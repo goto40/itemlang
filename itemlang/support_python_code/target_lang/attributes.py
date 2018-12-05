@@ -31,7 +31,8 @@ class BaseStruct(object):
         if item in self.__dict__.keys():
             self.__dict__[item]._set_value(new_value)
         else:
-            raise Exception("unexpected: no attribute {} in {}".format(item, type(self)))
+            raise Exception("unexpected: no attribute {} in {}".format(
+                item, type(self)))
 
     def __setattr__(self, item, new_value):
         if self._read_only:
@@ -70,7 +71,7 @@ class ReadOnlyAttribute(ScalarAttributeBase):
             self._value._activate_read_only()
 
     def _set_value(self, new_value):
-        if type(new_value) is type(self._value):
+        if isinstance(new_value, type(self._value)):
             # print("SETTER setting value {}".format(new_value))
             if isinstance(self._value, BaseStruct) and self._value._read_only:
                 self.__dict__["_value"] = copy(new_value)
@@ -78,7 +79,8 @@ class ReadOnlyAttribute(ScalarAttributeBase):
             else:
                 self.__dict__["_value"] = copy(new_value)
         else:
-            raise Exception("unexpected type {} for {}".format(type(new_value), type(self._value)))
+            raise Exception("unexpected type {} for {}".format(
+                type(new_value), type(self._value)))
 
     def __set__(self, instance, new_value):
         if self._read_only:
@@ -104,7 +106,7 @@ class DynamicArrayAttribute(ArrayAttributeBase):
         self.__dict__["_read_only"] = True
         if issubclass(self._dtype, BaseStruct):  # TODO: TEST
             for x in self._value:
-                x._activate_read_only();
+                x._activate_read_only()
 
     def _set_value(self, new_value):
         if new_value.dtype is self.__dict__["_value"].dtype:
@@ -112,10 +114,12 @@ class DynamicArrayAttribute(ArrayAttributeBase):
                 self.__dict__["_value"] = new_value
             else:
                 raise Exception(
-                    "unexpected: wrong array size {}!={}".format(new_value.shape, self.__dict__["_value"].shape))
+                    "unexpected: wrong array size {}!={}".format(
+                        new_value.shape, self.__dict__["_value"].shape))
         else:
             raise Exception(
-                "unexpected: wrong array type {}!={}".format(new_value.dtype, self.__dict__["_value"].dtype))
+                "unexpected: wrong array type {}!={}".format(
+                    new_value.dtype, self.__dict__["_value"].dtype))
 
     def _adjust_size(self):
         shape = list(map(lambda x: x(), self._dimensions))

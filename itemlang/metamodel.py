@@ -47,13 +47,15 @@ class Struct(CustomIdlBase):
 
     def get_structs_of_attributes(self):
         result = set()
-        for s in filter(lambda x: type(x) is Struct, map(lambda x: x.type, self.attributes)):
+        for s in filter(lambda x: type(x) is Struct, map(lambda x: x.type,
+                                                         self.attributes)):
             result.add(s)
         return result
 
     def get_raw_types_of_attributes(self):
         result = set()
-        for s in filter(lambda x: type(x) is RawType, map(lambda x: x.type, self.attributes)):
+        for s in filter(lambda x: type(x) is RawType, map(lambda x: x.type,
+                                                          self.attributes)):
             result.add(s)
         return result
 
@@ -64,8 +66,10 @@ class ScalarAttribute(CustomIdlBase):
         self._init_xtextobj(**kwargs)
 
     def affects_size(self):
-        struct = scoping_tools.get_recursive_parent_with_typename(self, "Struct")
-        for a in filter(lambda x: type(x) is ArrayAttribute, struct.attributes):
+        struct = \
+            scoping_tools.get_recursive_parent_with_typename(self, "Struct")
+        for a in filter(
+                lambda x: type(x) is ArrayAttribute, struct.attributes):
             for d in a.array_dimensions:
                 for ref in get_children_of_type("ScalarRef", d.array_size):
                     if self is ref.ref0:
@@ -82,7 +86,9 @@ class ArrayAttribute(CustomIdlBase):
         self._init_xtextobj(**kwargs)
 
     def has_fixed_size(self):
-        return reduce(lambda x, y: x and y, map(lambda x: x.array_size.has_fixed_size(), self.array_dimensions), True)
+        return reduce(lambda x, y: x and y, map(
+            lambda x: x.array_size.has_fixed_size(),
+            self.array_dimensions), True)
 
     def has_raw_type(self):
         return type(self.type) is RawType
@@ -107,9 +113,12 @@ def get_meta_model(debug=False, **kwargs):
 
     my_providers = {
         "*.*": scoping_providers.FQNImportURI(),
-        "ScalarRef.ref0": scoping_providers.RelativeName("parent(Struct).attributes"),
-        "ScalarRef.ref1": scoping_providers.RelativeName("ref0.type.attributes"),
-        "ScalarRef.ref2": scoping_providers.RelativeName("ref1.type.attributes"),
+        "ScalarRef.ref0":
+            scoping_providers.RelativeName("parent(Struct).attributes"),
+        "ScalarRef.ref1":
+            scoping_providers.RelativeName("ref0.type.attributes"),
+        "ScalarRef.ref2":
+            scoping_providers.RelativeName("ref1.type.attributes"),
     }
 
     my_object_processors = {
@@ -121,9 +130,12 @@ def get_meta_model(debug=False, **kwargs):
     }
 
     this_folder = dirname(abspath(__file__))
-    mm = metamodel_from_file(os.path.join(this_folder, grammar_file_name), debug=debug,
-                             classes=[Sum, Mul, Dif, Div, Val, ScalarRef, RawType, Struct, ArrayAttribute,
-                                      ScalarAttribute, ArrayDimension])
+    mm = metamodel_from_file(os.path.join(this_folder, grammar_file_name),
+                             debug=debug,
+                             classes=[Sum, Mul, Dif, Div, Val,
+                                      ScalarRef, RawType, Struct,
+                                      ArrayAttribute, ScalarAttribute,
+                                      ArrayDimension])
 
     mm.register_scope_providers(my_providers)
     mm.register_obj_processors(my_object_processors)

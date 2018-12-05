@@ -27,46 +27,45 @@ def test_basic_python_code():
 
     codegen.codegen(srcgen_folder=this_folder,
                     generate_python=True,
-                    model_string=
-                    """
-                    // model
-                    package types {
-                    type int   as custom {   python: "int" with format "i" }
-                    type float as custom {   python: "float" with format "f" }
-                    type UINT8 as custom {   python: "uint8"  from 'numpy' with format "B" }
-                    type UINT16 as custom {   python: "uint16" from 'numpy' with format "H" }
-                    }
-                    package mypackage1 {
-                    target_namespace "mypackage1.test"
-                    struct Header {
-                        scalar proofword : types.int
-                        scalar N : types.int { default = "0x16" }
-                        scalar k : types.int
-                        array info : types.float[10]
-                    }
-                    struct Data {
-                        scalar header   : Header
-                        scalar n        : types.int {default="5"}
-                        scalar x_f      : types.float
-                        scalar x_i      : types.int
-                        scalar x_ui16   : types.UINT16
-                        array  a_ui16   : types.UINT16
-                                            [header.N:master_index]
-                                            [n:client_index]
-                                            [2:real_imag]
-                        array  a_f      : types.float
-                                            [header.N:master_index]
-                                            [n:client_index]
-                        array  headers  : Header
-                                            [header.N:master_index]
-                                            [n:client_index]
-                    }
-                    struct Simple {
-                        scalar n        : types.UINT16 {default="5"}
-                        scalar x        : types.UINT16
-                        array  a_ui16   : types.UINT16[n]
-                    }
-                    }
+                    model_string="""
+    // model
+    package types {
+    type int   as custom {   python: "int" with format "i" }
+    type float as custom {   python: "float" with format "f" }
+    type UINT8 as custom {   python: "uint8"  from 'numpy' with format "B" }
+    type UINT16 as custom {   python: "uint16" from 'numpy' with format "H" }
+    }
+    package mypackage1 {
+        target_namespace "mypackage1.test"
+        struct Header {
+            scalar proofword : types.int
+            scalar N : types.int { default = "0x16" }
+            scalar k : types.int
+            array info : types.float[10]
+        }
+        struct Data {
+            scalar header   : Header
+            scalar n        : types.int {default="5"}
+            scalar x_f      : types.float
+            scalar x_i      : types.int
+            scalar x_ui16   : types.UINT16
+            array  a_ui16   : types.UINT16
+                                [header.N:master_index]
+                                [n:client_index]
+                                [2:real_imag]
+            array  a_f      : types.float
+                                [header.N:master_index]
+                                [n:client_index]
+            array  headers  : Header
+                                [header.N:master_index]
+                                [n:client_index]
+        }
+        struct Simple {
+            scalar n        : types.UINT16 {default="5"}
+            scalar x        : types.UINT16
+            array  a_ui16   : types.UINT16[n]
+        }
+    }
                     """)
 
     #################################

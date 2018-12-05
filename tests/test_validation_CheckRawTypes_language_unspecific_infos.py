@@ -28,8 +28,7 @@ def test_validation_check_raw_types():
     # no error
     # ---------------------------
     codegen.codegen(srcgen_folder=dest_folder,
-                    model_string=
-                    """
+                    model_string="""
                     // model
                     package types {
                         type intA as custom { }
@@ -45,8 +44,7 @@ def test_validation_check_raw_types():
     # ---------------------------
     with raises(Exception, match=r'Bits need to be specified for intC'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
+                        model_string="""
                         // model
                         package types {
                             type intA as custom { }
@@ -62,8 +60,7 @@ def test_validation_check_raw_types():
     # ---------------------------
     with raises(Exception, match=r'Bits need to be specified for uintD'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
+                        model_string="""
                         // model
                         package types {
                             type intA as custom { }
@@ -79,8 +76,7 @@ def test_validation_check_raw_types():
     # ---------------------------
     with raises(Exception, match=r'Bits need to be specified for floatE'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
+                        model_string="""
                         // model
                         package types {
                             type intA as custom { }

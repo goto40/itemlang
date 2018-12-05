@@ -36,7 +36,7 @@ def has_include(t):
     else:
         assert isinstance(t, RawType), "unexpected type found."
         if t.cpptype:
-            return t.cpptype.including != None
+            return t.cpptype.including is not None
         else:
             if t.genericType == 'signed':
                 return True
@@ -65,7 +65,8 @@ def fqn(t):
         struct = t
         fqn_result = ""
         if struct.parent.target_namespace:
-            fqn_result = "::".join(struct.parent.target_namespace.name.split("."))
+            fqn_result = "::".join(
+                struct.parent.target_namespace.name.split("."))
         return fqn_result + "::" + struct.name
     else:
         assert isinstance(t, RawType), "unexpected type found."
@@ -85,14 +86,16 @@ def fqn(t):
                 elif t.genericBits.bits == 128:
                     return "long double"
                 else:
-                    raise Exception("unexpected, unknown float with {} bits for ".format(
-                        t.genericBits.bits,
-                        t.name,
-                        get_model(t)._tx_filename))
+                    raise Exception(
+                        "unexpected, unknown float with {} bits for ".format(
+                            t.genericBits.bits,
+                            t.name,
+                            get_model(t)._tx_filename))
             else:
-                raise Exception("unexpected, C++ type specification is required for {} in file {}".format(
-                    t.name,
-                    get_model(t)._tx_filename))
+                raise Exception("unexpected, C++ type specification is " +
+                                "required for {} in file {}".format(
+                                    t.name,
+                                    get_model(t)._tx_filename))
 
 
 def default_value_init_code(attribute, force=False):
@@ -100,6 +103,7 @@ def default_value_init_code(attribute, force=False):
         return " = {}".format(attribute.default_value)
     else:
         if force:
-            raise Exception("expected default value for attribute {}".format(attribute.name))
+            raise Exception("expected default value for attribute {}".format(
+                attribute.name))
         else:
             return ""

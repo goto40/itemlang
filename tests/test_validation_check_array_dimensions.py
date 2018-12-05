@@ -28,8 +28,7 @@ def test_validation_check_array_dimensions():
     # no error
     # ---------------------------
     codegen.codegen(srcgen_folder=dest_folder,
-                    model_string=
-                    """
+                    model_string="""
                     // model
                     package types {
                         type int as custom {}
@@ -48,45 +47,45 @@ def test_validation_check_array_dimensions():
     # ---------------------------
     # error 1
     # ---------------------------
-    with raises(Exception, match=r'array .* needs to have named dimensions: specify .*'):
+    with raises(Exception, match=r'array .* needs to have named ' +
+                                 'dimensions: specify .*'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
-                        // model
-                        package types {
-                            type int as custom {}
-                            type UINT16 as custom {}
-                            type float as custom {}
-                        }
-                        package mypackage1 {
-                        target_namespace "mypackage1.test"
-                            struct Simple {
-                                scalar n        : types.UINT16 {default="5"}
-                                array  a_ui16   : types.UINT16[n][2*n:y] // missing dimension name
-                            }
-                        }
+                        model_string="""
+    // model
+    package types {
+        type int as custom {}
+        type UINT16 as custom {}
+        type float as custom {}
+    }
+    package mypackage1 {
+        target_namespace "mypackage1.test"
+        struct Simple {
+            scalar n        : types.UINT16 {default="5"}
+            array  a_ui16   : types.UINT16[n][2*n:y] // missing dimension name
+        }
+    }
                         """)
 
     # ---------------------------
     # error 1
     # ---------------------------
-    with raises(Exception, match=r'array .* needs to have named dimensions: specify .*'):
+    with raises(Exception, match=r'array .* needs to have named ' +
+                                 'dimensions: specify .*'):
         codegen.codegen(srcgen_folder=dest_folder,
-                        model_string=
-                        """
-                        // model
-                        package types {
-                            type int as custom {}
-                            type UINT16 as custom {}
-                            type float as custom {}
-                        }
-                        package mypackage1 {
-                        target_namespace "mypackage1.test"
-                            struct Simple {
-                                scalar n        : types.UINT16 {default="5"}
-                                array  a_ui16   : types.UINT16[n][2*n] // missing dimension name
-                            }
-                        }
+                        model_string="""
+    // model
+    package types {
+        type int as custom {}
+        type UINT16 as custom {}
+        type float as custom {}
+    }
+    package mypackage1 {
+    target_namespace "mypackage1.test"
+        struct Simple {
+            scalar n        : types.UINT16 {default="5"}
+            array  a_ui16   : types.UINT16[n][2*n] // missing dimension name
+        }
+    }
                         """)
 
     #################################
