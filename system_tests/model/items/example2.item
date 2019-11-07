@@ -1,0 +1,15 @@
+import "types.inc"
+
+package example2 {
+    target_namespace "project.example2"
+
+    struct Point {
+      scalar x: types.FLOAT32
+      scalar y: types.FLOAT32
+    }
+    struct Polygon {
+      scalar n:      types.UINT32 { default = "0x10" }
+      array  points: Point[n]
+    }
+}
+
